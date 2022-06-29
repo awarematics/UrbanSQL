@@ -1,0 +1,675 @@
+SQLActions[]={
+"BEGIN INSTALL
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MBoolBool(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MBoolBool(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MBoolTime(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MBoolTime(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MDoubleDouble(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MDoubleDouble(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MDoubleTime(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MDoubleTime(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MInstantTime(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MInstantTime(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MPointPoint(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MPointPoint(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MPointTime(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MPointTime(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MStringString(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MStringString(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MStringTime(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MStringTime(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MVideoAngle(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MVideoAngle(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MVideoDirection(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MVideoDirection(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MVideoDistance(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MVideoDistance(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MVideoPoint(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MVideoPoint(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MVideoTime(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MVideoTime(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION MVideoUri(
+	toWhom pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=ColumnsProjection.MVideoUri(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_ANY(
+	mgs1 pg_catalog.varchar)
+	RETURNS boolean
+	LANGUAGE java VOLATILE
+	AS 'boolean=com.awarematics.postmedia.operation.SpatialTemporalOP.M_ANY(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_AVG(
+	mgs pg_catalog.varchar)
+	RETURNS double precision
+	LANGUAGE java VOLATILE
+	AS 'double=com.awarematics.postmedia.operation.SpatialTemporalOP.M_AVG(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_AccelerationAtTimeTime(
+	mgs1 pg_catalog.varchar,
+	instant bigint)
+	RETURNS double precision
+	LANGUAGE java VOLATILE
+	AS 'double=com.awarematics.postmedia.operation.SpatialTemporalOP.M_AccelerationAtTimeTime(java.lang.String,long)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Area(
+	mgs1 pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=com.awarematics.postmedia.operation.SpatialTemporalOP.M_Area(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Astext(
+	mgstring pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=com.awarematics.postmedia.operation.IO.M_Astext(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_At(
+	mgstring pg_catalog.varchar,
+	n integer)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=com.awarematics.postmedia.operation.TemporalOP.M_At(java.lang.String,int)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Bypasses(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+	RETURNS boolean
+	LANGUAGE java VOLATILE
+	AS 'boolean=com.awarematics.postmedia.operation.SpatialTemporalOP.M_Bypasses(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Contains(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+	RETURNS boolean
+	LANGUAGE java VOLATILE
+	AS 'boolean=com.awarematics.postmedia.operation.TemporalOP.M_Contains(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Crosses(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+	RETURNS boolean
+	LANGUAGE java VOLATILE
+	AS 'boolean=com.awarematics.postmedia.operation.SpatialTemporalOP.M_Crosses(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_DWithin(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar,
+	withins double precision)
+	RETURNS boolean
+	LANGUAGE java VOLATILE
+	AS 'boolean=com.awarematics.postmedia.operation.SpatialTemporalOP.M_DWithin(java.lang.String,java.lang.String,double)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Direction(
+	mgs1 pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=com.awarematics.postmedia.operation.SpatialTemporalOP.M_Direction(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Distance(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=com.awarematics.postmedia.operation.SpatialTemporalOP.M_Distance(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_EndTime(
+	mgstring pg_catalog.varchar)
+	RETURNS bigint
+	LANGUAGE java VOLATILE
+	AS 'long=com.awarematics.postmedia.operation.TemporalOP.M_EndTime(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Enters(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+	RETURNS boolean
+	LANGUAGE java VOLATILE
+	AS 'boolean=com.awarematics.postmedia.operation.SpatialTemporalOP.M_Enters(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Equals(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+	RETURNS boolean
+	LANGUAGE java VOLATILE
+	AS 'boolean=com.awarematics.postmedia.operation.TemporalOP.M_Equals(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_EventTime(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=com.awarematics.postmedia.operation.SpatialTemporalOP.M_EventTime(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Hausdorff(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+	RETURNS double precision
+	LANGUAGE java VOLATILE
+	AS 'double=com.awarematics.postmedia.operation.SpatialTemporalOP.M_Hausdorff(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_ImmPrecedes(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+	RETURNS boolean
+	LANGUAGE java VOLATILE
+	AS 'boolean=com.awarematics.postmedia.operation.TemporalOP.M_ImmPrecedes(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_ImmSucceeds(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+	RETURNS boolean
+	LANGUAGE java VOLATILE
+	AS 'boolean=com.awarematics.postmedia.operation.TemporalOP.M_ImmSucceeds(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Intersects(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=com.awarematics.postmedia.operation.SpatialTemporalOP.M_Intersects(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_LCSS(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar,
+	epsilon double precision,
+	omega double precision)
+	RETURNS double precision
+	LANGUAGE java VOLATILE
+	AS 'double=com.awarematics.postmedia.operation.SpatialTemporalOP.M_LCSS(java.lang.String,java.lang.String,double,double)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_LCVS(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar,
+	delta double precision)
+	RETURNS double precision
+	LANGUAGE java VOLATILE
+	AS 'double=com.awarematics.postmedia.operation.SpatialTemporalOP.M_LCVS(java.lang.String,java.lang.String,double)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Lattice(
+	mgstring pg_catalog.varchar,
+	instant bigint)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=com.awarematics.postmedia.operation.TemporalOP.M_Lattice(java.lang.String,long)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Leaves(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+	RETURNS boolean
+	LANGUAGE java VOLATILE
+	AS 'boolean=com.awarematics.postmedia.operation.SpatialTemporalOP.M_Leaves(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_MAX(
+	mgs pg_catalog.varchar)
+	RETURNS double precision
+	LANGUAGE java VOLATILE
+	AS 'double=com.awarematics.postmedia.operation.SpatialTemporalOP.M_MAX(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_MIN(
+	mgs pg_catalog.varchar)
+	RETURNS double precision
+	LANGUAGE java VOLATILE
+	AS 'double=com.awarematics.postmedia.operation.SpatialTemporalOP.M_MIN(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_NumOf(
+	mgstring pg_catalog.varchar)
+	RETURNS integer
+	LANGUAGE java VOLATILE
+	AS 'java.lang.Integer=com.awarematics.postmedia.operation.TemporalOP.M_NumOf(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Overlaps(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+	RETURNS boolean
+	LANGUAGE java VOLATILE
+	AS 'boolean=com.awarematics.postmedia.operation.TemporalOP.M_Overlaps(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Precedes(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+	RETURNS boolean
+	LANGUAGE java VOLATILE
+	AS 'boolean=com.awarematics.postmedia.operation.TemporalOP.M_Precedes(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Relationship(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=com.awarematics.postmedia.operation.SpatialTemporalOP.M_Relationship(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Slice(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=com.awarematics.postmedia.operation.TemporalOP.M_Slice(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_SnapToGrid(
+	mgstring pg_catalog.varchar,
+	n integer)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=com.awarematics.postmedia.operation.SpatialTemporalOP.M_SnapToGrid(java.lang.String,int)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Snapshot(
+	mgstring pg_catalog.varchar,
+	instant bigint)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=com.awarematics.postmedia.operation.TemporalOP.M_Snapshot(java.lang.String,long)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Spatial(
+	mgstring pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=com.awarematics.postmedia.operation.TemporalOP.M_Spatial(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_StartTime(
+	mgstring pg_catalog.varchar)
+	RETURNS bigint
+	LANGUAGE java VOLATILE
+	AS 'long=com.awarematics.postmedia.operation.TemporalOP.M_StartTime(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Succeeds(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+	RETURNS boolean
+	LANGUAGE java VOLATILE
+	AS 'boolean=com.awarematics.postmedia.operation.TemporalOP.M_Succeeds(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Time(
+	mgstring pg_catalog.varchar)
+	RETURNS pg_catalog.varchar
+	LANGUAGE java VOLATILE
+	AS 'java.lang.String=com.awarematics.postmedia.operation.TemporalOP.M_Time(java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_TimeAtCummulative(
+	mgstring pg_catalog.varchar,
+	distance double precision)
+	RETURNS bigint
+	LANGUAGE java VOLATILE
+	AS 'long=com.awarematics.postmedia.operation.SpatialTemporalOP.M_TimeAtCummulative(java.lang.String,double)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_Traclus(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+	RETURNS double precision
+	LANGUAGE java VOLATILE
+	AS 'double=com.awarematics.postmedia.operation.SpatialTemporalOP.M_Traclus(java.lang.String,java.lang.String)'
+END PostgreSQL;
+BEGIN PostgreSQL
+CREATE OR REPLACE FUNCTION M_VelocityAtTime(
+	mgs1 pg_catalog.varchar,
+	instant bigint)
+	RETURNS double precision
+	LANGUAGE java VOLATILE
+	AS 'double=com.awarematics.postmedia.operation.SpatialTemporalOP.M_VelocityAtTime(java.lang.String,long)'
+END PostgreSQL;
+END INSTALL",
+"BEGIN REMOVE
+BEGIN PostgreSQL
+DROP FUNCTION MBoolBool(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION MBoolTime(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION MDoubleDouble(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION MDoubleTime(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION MInstantTime(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION MPointPoint(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION MPointTime(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION MStringString(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION MStringTime(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION MVideoAngle(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION MVideoDirection(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION MVideoDistance(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION MVideoPoint(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION MVideoTime(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION MVideoUri(
+	toWhom pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_ANY(
+	mgs1 pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_AVG(
+	mgs pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_AccelerationAtTimeTime(
+	mgs1 pg_catalog.varchar,
+	instant bigint)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Area(
+	mgs1 pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Astext(
+	mgstring pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_At(
+	mgstring pg_catalog.varchar,
+	n integer)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Bypasses(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Contains(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Crosses(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_DWithin(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar,
+	withins double precision)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Direction(
+	mgs1 pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Distance(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_EndTime(
+	mgstring pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Enters(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Equals(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_EventTime(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Hausdorff(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_ImmPrecedes(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_ImmSucceeds(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Intersects(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_LCSS(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar,
+	epsilon double precision,
+	omega double precision)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_LCVS(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar,
+	delta double precision)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Lattice(
+	mgstring pg_catalog.varchar,
+	instant bigint)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Leaves(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_MAX(
+	mgs pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_MIN(
+	mgs pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_NumOf(
+	mgstring pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Overlaps(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Precedes(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Relationship(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Slice(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_SnapToGrid(
+	mgstring pg_catalog.varchar,
+	n integer)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Snapshot(
+	mgstring pg_catalog.varchar,
+	instant bigint)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Spatial(
+	mgstring pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_StartTime(
+	mgstring pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Succeeds(
+	mgstring pg_catalog.varchar,
+	periodstring pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Time(
+	mgstring pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_TimeAtCummulative(
+	mgstring pg_catalog.varchar,
+	distance double precision)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_Traclus(
+	mgs1 pg_catalog.varchar,
+	mgs2 pg_catalog.varchar)
+END PostgreSQL;
+BEGIN PostgreSQL
+DROP FUNCTION M_VelocityAtTime(
+	mgs1 pg_catalog.varchar,
+	instant bigint)
+END PostgreSQL;
+END REMOVE"
+}
