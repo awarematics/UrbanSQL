@@ -62,14 +62,16 @@ CREATE TABLE mgeometry_columns
 ### Insert Examples 
 ```
 
-insert into car values(1, '57NU2001', 'Optima', 'hongkd7');
-insert into car values(2, '57NU2002', 'SonataYF', 'hongkd7');
+insert into Trip values(1, 1, 'Optima', 'hongkd7');
+insert into Trip values(1, 2, 'SonataYF', 'hongkd7');
+insert into Trip values(1, 2, 'SonataYF', 'hongkd7');
+insert into Trip values(1, 2, 'SonataYF', 'hongkd7');
+insert into Trip values(1, 2, 'SonataYF', 'hongkd7');
 
 
-select addmgeometrycolumn('public', 'bdd10k', 'mpoint', 4326, 'mpoint', 2, 50);
-select addmgeometrycolumn('public', 'bdd10k', 'mvideo', 4326, 'mvideo', 2, 50);
+select addmgeometrycolumn('public', 'Trip', 'mpoint', 4326, 'mpoint', 2, 50);
 
-select * from bdd10k;
+select * from Trip;
 
 
 ``` 
@@ -77,18 +79,9 @@ select * from bdd10k;
 ### Append Examples 
 ```
 
-UPDATE car 
+UPDATE Trip 
 SET    mpoint = append(mpoint, ('MPOINT ((200 200)@1180389003000, (203 208)@1180389004000)' ) 
 WHERE  taxi_id = 1;
-
---default : MVIDEO is "MVIDEO_SIMPLE"
-UPDATE car 
-SET    mvideo = append(mvideo, ('MVDIDEO ((200 200)@1180389003000, (203 208)@1180389004000), 'http://u-gist/1.mp4') 
-WHERE  taxi_id = 1;
-
-UPDATE car 
-SET    mvideo = append(mvideo, ('MVDIDEO_FULL ((200 200)@1180389003000, (203 208)@1180389004000),__________ 'http://u-gist/1.mp4') 
-WHERE  taxi_id = 2;
 
 
 ```
@@ -156,23 +149,23 @@ SELECT M_sCrosses('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON 
 ### SELECT Examples 
 --- 
 SELECT carid, mpoint
-FROM bdd10k;
+FROM Trip;
 
 ---
 SELECT carid, M_GEO2JSON(mpoint)
-FROM bdd10k;
+FROM Trip;
 
 ---
 SELECT carid, M_AsText(mpoint)
-FROM bdd10k;
+FROM Trip;
 
 ---
 SELECT carid, ST_AsText(m_spatial(mpoint))
-FROM bdd10k;
+FROM Trip;
 
 ---
 SELECT carid, M_Time(mpoint)
-FROM bdd10k;
+FROM Trip;
 
 ``` 
 
@@ -185,14 +178,14 @@ FROM bdd10k;
 -----basic temporal query no index  
 explain analyze
 select carid, mpoint, m_time(mpoint)
-from bdd10k 
+from Trip 
 where m_tintersects_noindex(mpoint, '(1504010956999,1504012995999)'::int8range)
 and carid <2000;
 
 -----no temporary table with index
 explain analyze
 select carid, mpoint, m_time(mpoint)
-from bdd10k
+from Trip
 where m_tintersects_index(mpoint, '(1504010956999,1504012995999)'::int8range )
 and carid <2000;
 
@@ -200,7 +193,7 @@ and carid <2000;
 ----- materialized
 explain analyze
 select carid, mpoint, m_time(mpoint)
-from bdd10k 
+from Trip 
 where m_tintersects_materialized(mpoint, '(1504010956999,1504012995999)'::int8range)
 and carid <2000;
 
@@ -218,7 +211,7 @@ and carid <2000;
 -----basic spatial query no index  
 explain analyze
 select carid, mpoint, m_spatial(mpoint)
-from bdd10k 
+from Trip 
 where m_intersects_noindex(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry,  '(1414010956999,1504012995999)'::int8range)
 and carid <8000;
 
@@ -226,7 +219,7 @@ and carid <8000;
 -----no spatial table with index
 explain analyze
 select carid, mpoint, m_spatial(mpoint)
-from bdd10k
+from Trip
 where m_intersects_index(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry, '(1414010956999,1504012995999)'::int8range)
 and carid <8000;
 
@@ -235,7 +228,7 @@ and carid <8000;
 -----spatial table with materialized
 explain analyze
 select carid, mpoint, m_spatial(mpoint)
-from bdd10k 
+from Trip 
 where m_intersects_materialized(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry, '(1414010956999,1504012995999)'::int8range)
 and carid <8000;
 
@@ -253,7 +246,7 @@ and carid <8000;
 -----basic spatial query no index  
 explain analyze
 select carid, mpoint, m_spatial(mpoint)
-from bdd10k 
+from Trip 
 where m_sintersects_noindex(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry)
 and carid <2000;
 
@@ -261,7 +254,7 @@ and carid <2000;
 -----no spatial table with index
 explain analyze
 select carid, mpoint, m_spatial(mpoint)
-from bdd10k
+from Trip
 where m_sintersects_index(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry)
 and carid <2000;
 
@@ -270,7 +263,7 @@ and carid <2000;
 -----spatial table with index
 explain analyze
 select carid, mpoint, m_spatial(mpoint)
-from bdd10k 
+from Trip 
 where m_sintersects_materialized(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry)
 and carid <10000;
 
@@ -293,14 +286,14 @@ FROM Trip t1,Trip t2
 
 -----basic join query no index  
 
-select carid from bdd100k_seg where m_mindistance_noindex(mpoint,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
+select carid from Trip where m_mindistance_noindex(mpoint,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
 
 -----join query with index  
 
-select carid from bdd100k_seg where m_mindistance_index(mpoint,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
+select carid from Trip where m_mindistance_index(mpoint,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
 
 ----- index with materialized
 
-select carid from bdd100k_seg where m_mindistance_materialized(mpoint,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
+select carid from Trip where m_mindistance_materialized(mpoint,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
 
 
