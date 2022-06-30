@@ -62,11 +62,11 @@ CREATE TABLE mgeometry_columns
 ### Insert Examples 
 ```
 
-insert into Trip values(1, 1, 'Optima', 'hongkd7');
-insert into Trip values(1, 2, 'SonataYF', 'hongkd7');
-insert into Trip values(1, 2, 'SonataYF', 'hongkd7');
-insert into Trip values(1, 2, 'SonataYF', 'hongkd7');
-insert into Trip values(1, 2, 'SonataYF', 'hongkd7');
+insert into Trip values(1, 1, 'MPOINT ((1 1)@1180389003000, (1 2)@1180389004000)');
+insert into Trip values(1, 2, 'MPOINT ((1 3)@1180389003000, (1 4)@1180389004000)');
+insert into Trip values(2, 1, 'MPOINT ((2 1)@1180389003000, (2 2)@1180389004000)');
+insert into Trip values(2, 2, 'MPOINT ((2 4)@1180389003000, (2 5)@1180389004000)');
+insert into Trip values(3, 1, 'MPOINT ((3 1)@1180389003000, (3 2)@1180389004000), (3 3)@1180389004000)');
 
 
 select addmgeometrycolumn('public', 'Trip', 'mpoint', 4326, 'mpoint', 2, 50);
