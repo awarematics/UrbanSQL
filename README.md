@@ -36,7 +36,7 @@
  create table Trip(
 	CarId integer primary key,
 	TripId varchar,
-	Trip mpoint
+	mpoint mpoint
 );
 
  
