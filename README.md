@@ -5,9 +5,6 @@
 
 
 ## Supported MGemoetry Types
-	
-	CREATE 
-	
 
 	MPoint :  MPOINT ((0.0 0.0) 1481480632123, (2.0 5.0) 1481480637123 ...)
 
@@ -135,15 +132,15 @@ SELECT *
 FROM Trip;
 
 ---
-SELECT carid, M_AsText(mpoint)
+SELECT carid, M_AsText(mpid)
 FROM Trip;
 
 ---
-SELECT carid, ST_AsText(m_spatial(mpoint))
+SELECT carid, ST_AsText(m_spatial(mpid))
 FROM Trip;
 
 ---
-SELECT carid, M_Time(mpoint)
+SELECT carid, M_Time(mpid)
 FROM Trip;
 
 ``` 
@@ -156,24 +153,24 @@ FROM Trip;
 
 -----basic temporal query no index  
 explain analyze
-select carid, mpoint, m_time(mpoint)
+select carid, mpid, m_time(mpid)
 from Trip 
-where m_tintersects_noindex(mpoint, '(1504010956999,1504012995999)'::int8range)
+where m_tintersects_noindex(mpid, '(1504010956999,1504012995999)'::int8range)
 and carid <2000;
 
 -----no temporary table with index
 explain analyze
-select carid, mpoint, m_time(mpoint)
+select carid, mpid, m_time(mpid)
 from Trip
-where m_tintersects_index(mpoint, '(1504010956999,1504012995999)'::int8range )
+where m_tintersects_index(mpid, '(1504010956999,1504012995999)'::int8range )
 and carid <2000;
 
 
 ----- materialized
 explain analyze
-select carid, mpoint, m_time(mpoint)
+select carid, mpid, m_time(mpid)
 from Trip 
-where m_tintersects_materialized(mpoint, '(1504010956999,1504012995999)'::int8range)
+where m_tintersects_materialized(mpid, '(1504010956999,1504012995999)'::int8range)
 and carid <2000;
 
 
@@ -189,24 +186,24 @@ and carid <2000;
 
 -----basic spatial query no index  
 explain analyze
-select carid, mpoint, m_spatial(mpoint)
+select carid, mpid, m_spatial(mpid)
 from Trip 
-where m_intersects_noindex(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry,  '(1414010956999,1504012995999)'::int8range)
+where m_intersects_noindex(mpid, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry,  '(1414010956999,1504012995999)'::int8range)
 and carid <8000;
 
 
 -----no spatial table with index
 explain analyze
-select carid, mpoint, m_spatial(mpoint)
+select carid, mpid, m_spatial(mpid)
 from Trip
-where m_intersects_index(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry, '(1414010956999,1504012995999)'::int8range)
+where m_intersects_index(mpid, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry, '(1414010956999,1504012995999)'::int8range)
 and carid <8000;
 
 
 
 -----spatial table with materialized
 explain analyze
-select carid, mpoint, m_spatial(mpoint)
+select carid, mpid, m_spatial(mpid)
 from Trip 
 where m_intersects_materialized(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry, '(1414010956999,1504012995999)'::int8range)
 and carid <8000;
@@ -224,7 +221,7 @@ and carid <8000;
 
 -----basic spatial query no index  
 explain analyze
-select carid, mpoint, m_spatial(mpoint)
+select carid, mpid, m_spatial(mpid)
 from Trip 
 where m_sintersects_noindex(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry)
 and carid <2000;
@@ -232,7 +229,7 @@ and carid <2000;
 
 -----no spatial table with index
 explain analyze
-select carid, mpoint, m_spatial(mpoint)
+select carid, mpid, m_spatial(mpid)
 from Trip
 where m_sintersects_index(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry)
 and carid <2000;
@@ -241,7 +238,7 @@ and carid <2000;
 
 -----spatial table with index
 explain analyze
-select carid, mpoint, m_spatial(mpoint)
+select carid, mpid, m_spatial(mpid)
 from Trip 
 where m_sintersects_materialized(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry)
 and carid <10000;
@@ -250,13 +247,13 @@ and carid <10000;
 ```
 ### K Nearest Neighbor Query
 ```
-SELECT m_knn(t.mpoint,'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry,3)
+SELECT m_knn(t.mpid,'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry,3)
 FROM Trip t
 
-SELECT m_knn(t.mpoint,p.geo,3)
+SELECT m_knn(t.mpid,p.geo,3)
 FROM Trip t,POI p
 
-SELECT m_knn(t1.traj,t2.traj,3)
+SELECT m_knn(t1.mpid,t2.mpid,3)
 FROM Trip t1,Trip t2
 
 ```
@@ -265,14 +262,14 @@ FROM Trip t1,Trip t2
 
 -----basic join query no index  
 
-select carid from Trip where m_mindistance_noindex(mpoint,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
+select carid from Trip where m_mindistance_noindex(mpid,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
 
 -----join query with index  
 
-select carid from Trip where m_mindistance_index(mpoint,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
+select carid from Trip where m_mindistance_index(mpid,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
 
 ----- index with materialized
 
-select carid from Trip where m_mindistance_materialized(mpoint,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
+select carid from Trip where m_mindistance_materialized(mpid,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
 
 
