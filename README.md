@@ -45,6 +45,16 @@
   mvn -v  
   
   ### 5.PL\JAVA 1.5.1
+  
+  sudo yum install pljava-11.x86_64  
+  ###### Setting in PostgreSQL for PL/Java
+  cd /var/lib/pgsql/11/data  
+  sudo vi postgresql.conf  
+  ###### Add the following lines for the pljava setting
+  pljava.classpath='/usr/pgsql-11/share/pljava/pljava-1.5.1.jar'
+  pljava.libjvm_location='/usr/lib/jvm/java-1.8.0-openjdk/jre/lib/amd64/server/libjvm.so'
+  ###### Restart of PostgreSQL
+  systemctl restart postgresql-11.service
 ## Supported MGemoetry Types
 
 	MPoint :  MPOINT ((0.0 0.0) 1481480632123, (2.0 5.0) 1481480637123 ...)
