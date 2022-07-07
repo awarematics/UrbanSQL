@@ -34,7 +34,7 @@
   sudo systemctl restart postgresql-11  
 ### 3.JDK 1.8
   sudo yum  install java-1.8.0-openjdk-devel.x86_64  
-### 4.Maven 3.3.9
+### 4.Maven 3.3.9 (Optional)
   wget https://mirror.navercorp.com/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz  
   tar -zxvf apache-maven-3.3.9-bin.tar.gz  
   mv apache-maven-3.3.9 maven  
@@ -62,7 +62,24 @@
   pljava.classpath='/usr/pgsql-11/share/pljava/pljava-1.5.6.jar'  
   pljava.libjvm_location='/usr/lib/jvm/java-1.8.0-openjdk/jre/lib/amd64/server/libjvm.so'  
   ###### Restart of PostgreSQL
-  systemctl restart postgresql-11.service  
+  systemctl restart postgresql-11.service 
+  
+  ### 6.PostGIS 2.5
+  
+  sudo yum install -y libtool libxml2 libxml2-devel libxslt libxslt-devel json-c json-c-devel cmake gmp gmp-devel mpfr mpfr-devel boost-devel pcre-  devel   
+  sudo yum install -y postgis25_11
+  systemctl restart postgresql-11.service 
+  
+  ### 7. UrbanSQL
+  cd /tmp
+  wget https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/proj_berlinmod/target/proj-0.0.1-SNAPSHOT.jar
+  wget https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/proj_berlinmod/jts-core-1.15.0-SNAPSHOT.jar
+  select sqlj.install_jar('file:/tmp/proj/target/proj-0.0.1-SNAPSHOT.jar', 'jar1', true);
+  select sqlj.install_jar('file:/tmp/jts-core-1.15.0-SNAPSHOT.jar', 'jar2', true);
+  select sqlj.set_classpath('public', 'jar1:jar2');
+  select sqlj.get_classpath('public');
+  ###### open database
+  
 ## Supported MGemoetry Types
 
 	MPoint :  MPOINT ((0.0 0.0) 1481480632123, (2.0 5.0) 1481480637123 ...)
