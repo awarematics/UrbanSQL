@@ -23,9 +23,9 @@
   ###### Permanently disable firewall  
   sudo firewall-cmd --add-port=5432/tcp --permanent  
   sudo firewall-cmd --reload  
-### JDK 1.8
+### 3.JDK 1.8
   sudo yum  install java-1.8.0-openjdk-devel.x86_64  
-### Maven 3.3.9
+### 4.Maven 3.3.9
   wget https://mirror.navercorp.com/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz  
   tar -zxvf apache-maven-3.3.9-bin.tar.gz  
   mv apache-maven-3.3.9 maven  
@@ -38,11 +38,12 @@
   PATH="$PATH:/home/info/maven/bin:/usr/pgsql-11/bin"  
   export PATH  
   
-  
   source /etc/profile  
   
   ###### test 
+  mvn -v  
   
+  ### 5.PL\JAVA 1.5.1
 ## Supported MGemoetry Types
 
 	MPoint :  MPOINT ((0.0 0.0) 1481480632123, (2.0 5.0) 1481480637123 ...)
