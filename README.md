@@ -41,12 +41,12 @@
   sudo vim  /etc/profile  
   
   ###### Add tail of profile
-  MAVEN_HOME=/home/info/maven  
+  MAVEN_HOME=/home/<u>Your username</u>/maven  
   export PATH=${MAVEN_HOME}/bin:${PATH}  
 	
-  PATH="$PATH:/home/info/maven/bin:/usr/pgsql-11/bin"  
+  PATH="$PATH:/home/<u>Your username</u>/maven/bin:/usr/pgsql-11/bin"  
   export PATH  
-  
+  ###### Restart profile
   source /etc/profile  
   
   ###### test 
