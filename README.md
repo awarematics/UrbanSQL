@@ -6,30 +6,42 @@
  4. Maven 3.3.9
  5. PL\JAVA 1.5.1
 ### 2. PostgreSQL 11
-  sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm  
-  sudo yum install  centos-release-scl-rh llvm-toolset-7-clang  centos-release-scl  
-  sudo yum install gcc-c++  
-  sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm   
-  sudo yum install  postgresql11 postgresql11-server postgresql11-contrib postgresql11-devel   
+  sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm    
+  sudo yum install  centos-release-scl-rh llvm-toolset-7-clang  centos-release-scl    
+  sudo yum install gcc-c++    
+  sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm     
+  sudo yum install  postgresql11 postgresql11-server postgresql11-contrib postgresql11-devel     
   ###### Initialize database
-  sudo /usr/pgsql-11/bin/postgresql-11-setup initdb
+  sudo /usr/pgsql-11/bin/postgresql-11-setup initdb  
   ###### Start
-  sudo systemctl start postgresql-11
+  sudo systemctl start postgresql-11  
   ###### Update postgres password
-  su -  
-  su postgres  
-  psql  
-  ALTER USER postgres WITH PASSWORD 'password';  
-  ###### Permanently disable firewall
-  sudo firewall-cmd --add-port=5432/tcp --permanent
-  sudo firewall-cmd --reload
+  su -   
+  su postgres    
+  psql    
+  ALTER USER postgres WITH PASSWORD 'password';    
+  ###### Permanently disable firewall  
+  sudo firewall-cmd --add-port=5432/tcp --permanent  
+  sudo firewall-cmd --reload  
 ### JDK 1.8
-  sudo yum  install java-1.8.0-openjdk-devel.x86_64
+  sudo yum  install java-1.8.0-openjdk-devel.x86_64  
 ### Maven 3.3.9
-  wget https://mirror.navercorp.com/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
-  tar -zxvf apache-maven-3.3.9-bin.tar.gz
-  mv apache-maven-3.3.9 maven
-  sudo vim  /etc/profile
+  wget https://mirror.navercorp.com/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz  
+  tar -zxvf apache-maven-3.3.9-bin.tar.gz  
+  mv apache-maven-3.3.9 maven  
+  sudo vim  /etc/profile  
+  
+  ###### Add tail of profile
+  MAVEN_HOME=/home/info/maven  
+  export PATH=${MAVEN_HOME}/bin:${PATH}  
+	
+  PATH="$PATH:/home/info/maven/bin:/usr/pgsql-11/bin"  
+  export PATH  
+  
+  
+  source /etc/profile  
+  
+  ###### test 
   
 ## Supported MGemoetry Types
 
