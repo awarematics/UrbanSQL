@@ -42,7 +42,7 @@
   
   ###### Add tail of profile
   MAVEN_HOME=/home/Your username/maven  
-  export PATH=\$\{MAVEN\_HOME\}/bin:${PATH}   \*
+  export PATH\=\$\{MAVEN\\_HOME\}\/bin\:\$\{PATH\}   
 	
   PATH="$PATH:/home/Your username/maven/bin:/usr/pgsql-11/bin"  
   export PATH  
@@ -52,7 +52,7 @@
   ###### test 
   mvn -v  
   
-  ### 5.PL\JAVA 1.5.1
+  ### 5.PL\JAVA 1.5.6
   
   sudo yum install pljava-11.x86_64  
   ###### Setting in PostgreSQL for PL/Java
