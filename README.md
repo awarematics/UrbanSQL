@@ -24,6 +24,14 @@
   ###### Permanently disable firewall  
   sudo firewall-cmd --add-port=5432/tcp --permanent  
   sudo firewall-cmd --reload  
+  ###### Set connection
+  sudo vi /var/lib/pgsql/11/data/postgresql.conf
+  listen_addresses='*'
+
+  sudo vi /var/lib/pgsql/11/data/pg_hba.conf
+  host  all  all 0.0.0.0/0 md5
+		
+  sudo systemctl restart postgresql-11
 ### 3.JDK 1.8
   sudo yum  install java-1.8.0-openjdk-devel.x86_64  
 ### 4.Maven 3.3.9
