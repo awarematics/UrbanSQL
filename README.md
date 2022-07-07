@@ -6,12 +6,11 @@
  4. Maven 3.3.9
  5. PL\JAVA 1.5.1
 ### 2. PostgreSQL 11
-  sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-  sudo yum install  centos-release-scl-rh llvm-toolset-7-clang  centos-release-scl
-  sudo yum install gcc-c++
-  sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
-  sudo yum install  postgresql11 postgresql11-server postgresql11-contrib postgresql11-devel
-  
+  sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm  
+  sudo yum install  centos-release-scl-rh llvm-toolset-7-clang  centos-release-scl  
+  sudo yum install gcc-c++  
+  sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm   
+  sudo yum install  postgresql11 postgresql11-server postgresql11-contrib postgresql11-devel   
   ###### Initialize database
   sudo /usr/pgsql-11/bin/postgresql-11-setup initdb
   ###### Start
