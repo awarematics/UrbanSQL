@@ -42,7 +42,7 @@
   
   ###### Add tail of profile
   MAVEN_HOME=/home/Your username/maven  
-  export PATH=\${MAVEN\_HOME}/bin:\${PATH}   
+  export PATH=\\\${MAVEN\\\_HOME}/bin:\\\${PATH}   
 	
   PATH="$PATH:/home/Your username/maven/bin:/usr/pgsql-11/bin"  
   export PATH  
