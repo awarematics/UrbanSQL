@@ -1,6 +1,6 @@
 # UrbanSQL
 
-UrbanSQL is an
+UrbanSQL is an open source database extension based on PostgreSQL and PostGIS for managing spatio-temporal data
 ### Requirements
  1. CentOS 7
  2. PostgreSQL 11
