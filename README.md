@@ -16,10 +16,10 @@
   ###### Start
   sudo systemctl start postgresql-11
   ###### Update postgres password
-  su -
-  su postgres
-  psql
-  ALTER USER postgres WITH PASSWORD 'password';
+  su -  
+  su postgres  
+  psql  
+  ALTER USER postgres WITH PASSWORD 'password';  
   ###### Permanently disable firewall
   sudo firewall-cmd --add-port=5432/tcp --permanent
   sudo firewall-cmd --reload
