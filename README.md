@@ -487,7 +487,7 @@ SELECT m_knn(t1.mpid,t2.mpid,3)
 FROM Trip t1,Trip t2
 
 ```
-### Distance Join Queries (MGeometry to Geometry)
+### Distance Join Queries
 ```
 
 -----basic join query no index  
