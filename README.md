@@ -5,6 +5,7 @@
  3. JDK 1.8
  4. Maven 3.3.9
  5. PL\JAVA 1.5.1
+ 6. PostGIS 2.5
 ### 2. PostgreSQL 11
   sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm    
   sudo yum install  centos-release-scl-rh llvm-toolset-7-clang  centos-release-scl    
