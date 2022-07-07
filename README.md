@@ -25,13 +25,13 @@
   sudo firewall-cmd --add-port=5432/tcp --permanent  
   sudo firewall-cmd --reload  
   ###### Set connection
-  sudo vi /var/lib/pgsql/11/data/postgresql.conf
-  listen_addresses='*'
+  sudo vi /var/lib/pgsql/11/data/postgresql.conf  
+  listen_addresses='*'  
 
-  sudo vi /var/lib/pgsql/11/data/pg_hba.conf
-  host  all  all 0.0.0.0/0 md5
+  sudo vi /var/lib/pgsql/11/data/pg_hba.conf  
+  host  all  all 0.0.0.0/0 md5  
 		
-  sudo systemctl restart postgresql-11
+  sudo systemctl restart postgresql-11  
 ### 3.JDK 1.8
   sudo yum  install java-1.8.0-openjdk-devel.x86_64  
 ### 4.Maven 3.3.9
@@ -59,10 +59,10 @@
   cd /var/lib/pgsql/11/data  
   sudo vi postgresql.conf  
   ###### Add the following lines for the pljava setting
-  pljava.classpath='/usr/pgsql-11/share/pljava/pljava-1.5.1.jar'
-  pljava.libjvm_location='/usr/lib/jvm/java-1.8.0-openjdk/jre/lib/amd64/server/libjvm.so'
+  pljava.classpath='/usr/pgsql-11/share/pljava/pljava-1.5.1.jar'  
+  pljava.libjvm_location='/usr/lib/jvm/java-1.8.0-openjdk/jre/lib/amd64/server/libjvm.so'  
   ###### Restart of PostgreSQL
-  systemctl restart postgresql-11.service
+  systemctl restart postgresql-11.service  
 ## Supported MGemoetry Types
 
 	MPoint :  MPOINT ((0.0 0.0) 1481480632123, (2.0 5.0) 1481480637123 ...)
