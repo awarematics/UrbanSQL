@@ -32,9 +32,9 @@
   host  all  all 0.0.0.0/0 md5  
 		
   sudo systemctl restart postgresql-11  
-### 3.JDK 1.8
+### 3. JDK 1.8
   sudo yum  install java-1.8.0-openjdk-devel.x86_64  
-### 4.Maven 3.3.9 (Optional)
+### 4. Maven 3.3.9 (Optional)
   wget https://mirror.navercorp.com/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz  
   tar -zxvf apache-maven-3.3.9-bin.tar.gz  
   mv apache-maven-3.3.9 maven  
@@ -52,7 +52,7 @@
   ###### test 
   mvn -v  
   
-  ### 5.PL\JAVA 1.5.6
+  ### 5. PL\JAVA 1.5.6
   
   sudo yum install pljava-11.x86_64  
   ###### Setting in PostgreSQL for PL/Java
@@ -64,7 +64,7 @@
   ###### Restart of PostgreSQL
   systemctl restart postgresql-11.service 
   
-  ### 6.PostGIS 2.5
+  ### 6. PostGIS 2.5
   
   sudo yum install -y libtool libxml2 libxml2-devel libxslt libxslt-devel json-c json-c-devel cmake gmp gmp-devel mpfr mpfr-devel boost-devel pcre-  devel   
   sudo yum install -y postgis25_11
