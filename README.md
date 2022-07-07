@@ -71,14 +71,15 @@
   systemctl restart postgresql-11.service 
   
   ### 7. UrbanSQL
-  cd /tmp
-  wget https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/proj_berlinmod/target/proj-0.0.1-SNAPSHOT.jar
-  wget https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/proj_berlinmod/jts-core-1.15.0-SNAPSHOT.jar
-  select sqlj.install_jar('file:/tmp/proj/target/proj-0.0.1-SNAPSHOT.jar', 'jar1', true);
-  select sqlj.install_jar('file:/tmp/jts-core-1.15.0-SNAPSHOT.jar', 'jar2', true);
-  select sqlj.set_classpath('public', 'jar1:jar2');
-  select sqlj.get_classpath('public');
-  ###### open database
+  cd /tmp   
+  wget https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/proj_berlinmod/target/proj-0.0.1-SNAPSHOT.jar    
+  wget https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/proj_berlinmod/jts-core-1.15.0-SNAPSHOT.jar  
+  ###### open database  
+  select sqlj.install_jar('file:/tmp/proj/target/proj-0.0.1-SNAPSHOT.jar', 'jar1', true);    
+  select sqlj.install_jar('file:/tmp/jts-core-1.15.0-SNAPSHOT.jar', 'jar2', true);    
+  select sqlj.set_classpath('public', 'jar1:jar2');    
+  select sqlj.get_classpath('public');    
+  
   
 ## Supported MGemoetry Types
 
