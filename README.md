@@ -70,8 +70,8 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   ### 6. PostGIS 2.5
   
   sudo yum install -y libtool libxml2 libxml2-devel libxslt libxslt-devel json-c json-c-devel cmake gmp gmp-devel mpfr mpfr-devel boost-devel pcre-  devel   
-  sudo yum install -y postgis25_11
-  systemctl restart postgresql-11.service 
+  sudo yum install -y postgis25_11  
+  systemctl restart postgresql-11.service   
   
   ### 7. UrbanSQL
   cd /tmp   
