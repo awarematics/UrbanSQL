@@ -52,7 +52,7 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   ###### Restart profile
   source /etc/profile  
   
-  ###### test 
+  ###### est 
   mvn -v  
   
   ### 5. PL\JAVA 1.5.6
