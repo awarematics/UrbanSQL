@@ -1,7 +1,8 @@
 # UrbanSQL
-
-UrbanSQL is an open source database extension based on PostgreSQL and PostGIS for managing spatio-temporal data
-### Requirements
+UrbanSQL is an open source database extension based on PostgreSQL and PostGIS for managing spatio-temporal data  
+***
+# Installation
+## Requirements
  1. CentOS 7
  2. PostgreSQL 11
  3. JDK 1.8
@@ -82,7 +83,7 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   select sqlj.set_classpath('public', 'jar1:jar2');    
   select sqlj.get_classpath('public');    
   
-  
+# Tutorials 
 ## Supported MGemoetry Types
 
 	MPoint :  MPOINT ((0.0 0.0) 1481480632123, (2.0 5.0) 1481480637123 ...)
