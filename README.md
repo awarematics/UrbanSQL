@@ -6,8 +6,8 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
  1. CentOS 7
  2. PostgreSQL 11
  3. JDK 1.8
- 4. Maven 3.3.9
- 5. PL\JAVA 1.5.1
+ 4. Maven 3.3.9(Optional)
+ 5. PL\JAVA 1.5.6
  6. PostGIS 2.5
 ### 2. PostgreSQL 11
   sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm    
@@ -37,8 +37,8 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   sudo systemctl restart postgresql-11  
 ### 3. JDK 1.8
   sudo yum  install java-1.8.0-openjdk-devel.x86_64  
-### 4. Maven 3.3.9 (Optional)
-  wget https://mirror.navercorp.com/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz  
+### 4. Maven 3.3.9 (Optional)  
+  wget https://mirror.navercorp.com/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz   
   tar -zxvf apache-maven-3.3.9-bin.tar.gz  
   mv apache-maven-3.3.9 maven  
   sudo vim  /etc/profile  
