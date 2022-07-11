@@ -84,25 +84,21 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   select sqlj.get_classpath('public');    
   
 # Tutorials 
-## Supported MGemoetry Types
+## Supported  Types
+ MPoint :  MPOINT ((0.0 0.0) 1481480632123, (2.0 5.0) 1481480637123 ...)
 
-	MPoint :  MPOINT ((0.0 0.0) 1481480632123, (2.0 5.0) 1481480637123 ...)
-
-## UrbanSQL SQL Real Examples
-
-### Create TABLE examples 
+### Create TABLE and Update data 
 
 ```
   CREATE TYPE mpoint AS(
    	moid oid,
   	segid text 
-);
+	);
 
   CREATE TABLE Trip(
 	CarId integer primary key,
-	TripId varchar,
-	mpid mpoint
-);
+	TripId varchar
+	);
 
 CREATE TABLE mgeometry_columns
 (
@@ -295,26 +291,24 @@ insert into mpoint_150348 values(3, 2,BOX(13.32512 52.45972,13.40489 52.52358),[
 
 
 ```
-### UDF Function Examples 
+### Temporal queries
+
 ```
 
 SELECT M_At('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 2);
-	------>Return: MPOINT ((41.67 -73.81) 2000)
+	------>Return: (,,"{""(40.77,-73.96)""}","{""2017-09-02 08:14:23""}")
 
 SELECT M_NumOf('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
 	------>Return: 2
 
 SELECT M_Time('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
-	------>Return:(1000,2000)
-	
-SELECT M_Spatial('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
-	------>Return: Geometry
+	------>Return:(1504354462000,1504354501000)
 
 SELECT M_StartTime('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
-	------>Return:1000
+	------>Return:1504354462000
 
 SELECT M_EndTime('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
-	------>Return:2000
+	------>Return:1504354501000
 
 SELECT M_Spatial('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
 	------>Return:LINESTRING(40.77 -73.95,40.77 -73.96)
@@ -328,179 +322,87 @@ SELECT M_Slice('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'Period (110
 SELECT M_Lattice('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 2000);
 	------>Return:(,,"{""(40.77,-73.95)""}","{""2017-09-02 08:14:22""}")
 
-SELECT M_Overlaps('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'Period (1100, 2200)');
+SELECT M_tOverlaps('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'Period (1100, 2200)');
 	------>Return: true
-	
 
-SELECT M_TimeAtCummulative('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 2);
-	------>Return: 1000
+SELECT M_At(mt, 2) FROM usertrajs;
+	------>Return: (1,286114,"{""(40.77,-73.96)""}","{""2017-09-02 08:14:23""}")
 
-SELECT M_Slice('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'Period (1000, 2000)');
-	------>Return: 'MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)'
+SELECT M_NumOf(mt) FROM usertrajs;
+	------>Return: 2
+
+SELECT M_Time(mt) FROM usertrajs;
+	------>Return:(1504354462000,1504354501000)
+
+SELECT M_StartTime(mt) FROM usertrajs;
+	------>Return:1504354462000
+
+SELECT M_EndTime(mt) FROM usertrajs;
+	------>Return:1504354501000
+
+SELECT M_Spatial(mt) FROM usertrajs;
+	------>Return:LINESTRING(40.77 -73.95,40.77 -73.96)
+
+SELECT M_Snapshot(mt, 1000) FROM usertrajs;
+	------>Return:POINT(40.77 -73.95)
+
+SELECT M_Slice(mt, 'Period (1100, 1200)') FROM usertrajs;
+	------>Return:(1,286114,"{""(40.77,-73.95)"",""(40.77,-73.96)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}")
+
+SELECT M_Lattice(mt, 2000) FROM usertrajs;
+	------>Return:(1,286114,"{""(40.77,-73.95)""}","{""2017-09-02 08:14:22""}")
+
+SELECT M_tOverlaps(mt, 'Period (1100, 2200)') FROM usertrajs;
+	------>Return: true
+
+### Spatial and spatiotemporal queries
+
+SELECT M_TimeAtCummulative('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 2);
+	------>Return: 1504354471666
+
+SELECT M_Slice('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+	------>Return:(,,"{""(40.77,-73.95)"",""(40.77,-73.96)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
 
 SELECT M_SnapToGrid('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 1);
-	------>Return: 'MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)'
+	------>Return:(,,"{""(40.8,-74.0)"",""(40.8,-74.0)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
 
-SELECT M_Enters('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+SELECT M_mEnters('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:false
 
-SELECT M_Bypasses('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+SELECT M_mBypasses('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:false
 
-NO
-SELECT M_sStayIn('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+SELECT M_mStayIn('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:true
 
-SELECT M_Leaves('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+SELECT M_mLeaves('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:false
 
-SELECT M_sCrosses('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
-	------>Return:false 
-
-### SELECT Examples 
---- 
-SELECT *
-FROM Trip;
-
----
-SELECT carid, M_AsText(mpid)
-FROM Trip;
-
----
-SELECT carid, ST_AsText(m_spatial(mpid))
-FROM Trip;
-
----
-SELECT carid, M_Time(mpid)
-FROM Trip;
-
+SELECT M_mCrosses('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+	------>Return:false
+	
+SELECT M_Direction('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
+	------>Return: (,,"{0,-0.08}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_VelocityAtTime('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 1500);
+	------>Return: 1.37
+	
+SELECT M_AccelerationAtTime('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 1500);
+	------>Return: 0.0006
+	
+SELECT M_Max('MDOUBLE (1.002 1503828254949, 1.042 1503828254969)');
+	------>Return: 1.042
+	
+SELECT M_Min('MDOUBLE (1.002 1503828254949, 1.042 1503828254969)');
+	------>Return: 1.002
+	
+SELECT M_Avg('MDOUBLE (1.002 1503828254949, 1.042 1503828254969)');
+	------>Return: 1.022
+	
+SELECT M_DWithin('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000, 
+		(00001.mp4?t=2 10 -1 0.1 -5.61 -1 -1 null null 41.67 -73.81) 2000)', 500);
+	------>Return: true
 ``` 
-
-### Range Queries
-
-### Temporal Range Queries
-```
-
-
------basic temporal query no index  
-explain analyze
-select carid, mpid, m_time(mpid)
-from Trip 
-where m_tintersects_noindex(mpid, '(1504010956999,1504012995999)'::int8range)
-and carid <2000;
-
------no temporary table with index
-explain analyze
-select carid, mpid, m_time(mpid)
-from Trip
-where m_tintersects_index(mpid, '(1504010956999,1504012995999)'::int8range )
-and carid <2000;
-
-
------ materialized
-explain analyze
-select carid, mpid, m_time(mpid)
-from Trip 
-where m_tintersects_materialized(mpid, '(1504010956999,1504012995999)'::int8range)
-and carid <2000;
-
-
-
-
-
-
-```
----Spatial Range Queries
-
-```
-
-
------basic spatial query no index  
-explain analyze
-select carid, mpid, m_spatial(mpid)
-from Trip 
-where m_intersects_noindex(mpid, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry,  '(1414010956999,1504012995999)'::int8range)
-and carid <8000;
-
-
------no spatial table with index
-explain analyze
-select carid, mpid, m_spatial(mpid)
-from Trip
-where m_intersects_index(mpid, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry, '(1414010956999,1504012995999)'::int8range)
-and carid <8000;
-
-
-
------spatial table with materialized
-explain analyze
-select carid, mpid, m_spatial(mpid)
-from Trip 
-where m_intersects_materialized(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry, '(1414010956999,1504012995999)'::int8range)
-and carid <8000;
-
-
-
-
-
-```
-### Spatial-temporal Range Queries
-```
-
-
-
-
------basic spatial query no index  
-explain analyze
-select carid, mpid, m_spatial(mpid)
-from Trip 
-where m_sintersects_noindex(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry)
-and carid <2000;
-
-
------no spatial table with index
-explain analyze
-select carid, mpid, m_spatial(mpid)
-from Trip
-where m_sintersects_index(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry)
-and carid <2000;
-
-
-
------spatial table with index
-explain analyze
-select carid, mpid, m_spatial(mpid)
-from Trip 
-where m_sintersects_materialized(mpoint, 'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry)
-and carid <10000;
-
-
-```
-### K Nearest Neighbor Query
-```
-SELECT m_knn(t.mpid,'LINESTRING(40 -73,40.7416693959765 -73.9897693321798,40.7416693959765 -73.9897693321798)'::geometry,3)
-FROM Trip t
-
-SELECT m_knn(t.mpid,p.geo,3)
-FROM Trip t,POI p
-
-SELECT m_knn(t1.mpid,t2.mpid,3)
-FROM Trip t1,Trip t2
-
-```
-### Distance Join Queries
-```
-
------basic join query no index  
-
-select carid from Trip where m_mindistance_noindex(mpid,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
-
------join query with index  
-
-select carid from Trip where m_mindistance_index(mpid,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
-
------ index with materialized
-
-select carid from Trip where m_mindistance_materialized(mpid,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0);
-
+### K Nearest Neighbors Query
 
