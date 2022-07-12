@@ -88,7 +88,7 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   pljava.classpath='/usr/pgsql-11/share/pljava/pljava-1.5.6.jar'  
   pljava.libjvm_location='/usr/lib/jvm/java-1.8.0-openjdk/jre/lib/amd64/server/libjvm.so'  
   ```
-  ###### Restart of PostgreSQL
+  ###### Restart PostgreSQL
   ```
   systemctl restart postgresql-11.service 
   ```
@@ -99,17 +99,23 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   systemctl restart postgresql-11.service   
   ```
   ### 7. UrbanSQL
+  ```
   cd /tmp   
   wget https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/proj_berlinmod/target/proj-0.0.1-SNAPSHOT.jar    
   wget https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/proj_berlinmod/jts-core-1.15.0-SNAPSHOT.jar  
-  ###### open database  
+  ```
+  ###### Open database or pgAdmin 
+  ```
   select sqlj.install_jar('file:/tmp/proj/target/proj-0.0.1-SNAPSHOT.jar', 'jar1', true);    
   select sqlj.install_jar('file:/tmp/jts-core-1.15.0-SNAPSHOT.jar', 'jar2', true);    
   select sqlj.set_classpath('public', 'jar1:jar2');    
-  select sqlj.get_classpath('public');    
-  
+  select sqlj.get_classpath('public'); 
+  ```
+  ###### Install UrbanSQL Execution Functions
+   Visited from github: https://github.com/awarematics/UrbanSQL/tree/main/PostgreSQL/01.install , and execute the sql file in the order of 01 - 09.
+  ######  End
 # Tutorials 
-## Supported  Types
+## Supported Types
  MPoint :  MPOINT ((0.0 0.0) 1481480632123, (2.0 5.0) 1481480637123 ...)
 
 ### Create TABLE and Update data 
@@ -130,16 +136,7 @@ insert into Trip values(2, 2);
 insert into Trip values(3, 1);
 insert into Trip values(3, 2);
 
-select addmgeometrycolumn('public', 'Trip', 'mpoint', 4326, 'mpoint', 2, 50);
-
-insert into mpoint_150348 values(1, 1,BOX(13.43593 52.41721,13.43593 52.41721),[1180191600000,1180309007846),ST_GeomFromText(LINESTRING(13.43593 52.41721,13.43593 52.41721)),MPOINT ((13.43593 52.41721) 1180191600000, (13.43593 52.41721) 1180309007846));
-insert into mpoint_150348 values(1, 2,BOX(13.47552 52.43829,13.47552 52.43829),[1180438295782,1180442939602),ST_GeomFromText(LINESTRING(13.47552 52.43829,13.47552 52.43829)),MPOINT ((13.47552 52.43829) 1180438295782, (13.47552 52.43829) 1180442939602));
-insert into mpoint_150348 values(2, 1,BOX(13.39108 52.58387,13.39108 52.58387),[1180303835745,1180337117147),ST_GeomFromText(LINESTRING(13.39108 52.58387,13.39108 52.58387)),MPOINT ((13.39108 52.58387) 1180303835745, (13.39108 52.58387) 1180337117147));
-insert into mpoint_150348 values(2, 2,BOX(13.40434 52.54036,13.40434 52.54036),[1180396529245,1180424269005),ST_GeomFromText(LINESTRING(13.40434 52.54036,13.40434 52.54036)),MPOINT ((13.40434 52.54036) 1180396529245, (13.40434 52.54036) 1180424269005));
-insert into mpoint_150348 values(3, 1,BOX(13.54834 52.493,13.54834 52.493),[1180445630247,1180537200000),ST_GeomFromText(LINESTRING(13.54834 52.493,13.54834 52.493)),MPOINT ((13.54834 52.493) 1180445630247, (13.54834 52.493) 1180537200000));
-insert into mpoint_150348 values(3, 2,BOX(13.32512 52.45972,13.40489 52.52358),[1180334169257,1180334751818),ST_GeomFromText(LINESTRING(13.54834 52.493,13.54834 52.493)),MPOINT ((13.54834 52.493) 1180445630247, (13.54834 52.493) 1180537200000));
-
-
+Select addmgeometrycolumn('public', 'Trip', 'mpoint', 4326, 'mpoint', 2, 50);
 
 ```
 ### Temporal queries
