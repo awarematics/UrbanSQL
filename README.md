@@ -117,8 +117,23 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   ######  End
 # Tutorials 
 ## Supported Types
- MPoint :  MPOINT ((0.0 0.0) 1481480632123, (2.0 5.0) 1481480637123 ...)
+```
+  MInt :  MINT (2 1556911346, 3 1556911347, ...)
 
+  MBool :  MBOOL (ture 1000, false 1000, true ...)  
+
+  MDouble : MDOUBLE (1743.6106216698727 1556811344, 1587.846969956488 1556911345 ...)
+
+  MMultiPoint :  MMUltiPoint (((0 0) 1589302899, (1 1) 1589305899, ...) ...)
+
+  MString :  MSTRING (disjoint 1481480632123, meet 1481480637123 ...)
+
+  MPoint :  MPOINT ((0.0 0.0) 1481480632123, (2.0 5.0) 1481480637123 ...)
+ 
+  MLineString :  MLINESTRING ((-1 0, 0 0, 0 0.5, 5 5) 1481480632123, (0 0, -1 0) 1481480637123 ...)
+
+  MPolygon : MPOLYGON ((0 0, 1 1, 1 0, 0 0) 1000, (0 0, 1 1, 1 0, 0 0) 2000 ...)
+```
 ### Create TABLE and Update data 
 
 ```
