@@ -55,6 +55,7 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
 ```
   wget https://mirror.navercorp.com/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz   
   tar -zxvf apache-maven-3.3.9-bin.tar.gz  
+  
   mv apache-maven-3.3.9 maven  
   sudo vim  /etc/profile  
 ```  
