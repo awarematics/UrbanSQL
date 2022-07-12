@@ -10,24 +10,35 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
  5. PL\JAVA 1.5.6
  6. PostGIS 2.5
 ### 2. PostgreSQL 11
+  ```
   sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm    
   sudo yum install  centos-release-scl-rh llvm-toolset-7-clang  centos-release-scl    
   sudo yum install gcc-c++    
   sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm     
-  sudo yum install  postgresql11 postgresql11-server postgresql11-contrib postgresql11-devel     
+  sudo yum install  postgresql11 postgresql11-server postgresql11-contrib postgresql11-devel   
+  ```
   ###### Initialize database
-  sudo /usr/pgsql-11/bin/postgresql-11-setup initdb  
+  ```
+  sudo /usr/pgsql-11/bin/postgresql-11-setup initdb 
+  ```
   ###### Start
+  ```
   sudo systemctl start postgresql-11  
+  ```
   ###### Update postgres password
+  ```
   su -   
   su postgres    
   psql    
   ALTER USER postgres WITH PASSWORD 'password';    
+  ```
   ###### Permanently disable firewall  
+  ```
   sudo firewall-cmd --add-port=5432/tcp --permanent  
   sudo firewall-cmd --reload  
+  ```
   ###### Set connection
+  ```
   sudo vi /var/lib/pgsql/11/data/postgresql.conf  
   listen_addresses='*'  
 
@@ -35,44 +46,58 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   host  all  all 0.0.0.0/0 md5  
 		
   sudo systemctl restart postgresql-11  
+  ```
 ### 3. JDK 1.8
+  ```
   sudo yum  install java-1.8.0-openjdk-devel.x86_64  
+  ```
 ### 4. Maven 3.3.9 (Optional)  
+```
   wget https://mirror.navercorp.com/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz   
   tar -zxvf apache-maven-3.3.9-bin.tar.gz  
   mv apache-maven-3.3.9 maven  
   sudo vim  /etc/profile  
-  
+```  
   ###### Add tail of profile
+  ```
   MAVEN_HOME=/home/Your username/maven  
   export PATH=\\\${MAVEN\\\_HOME}/bin:\\\${PATH}   
 	
   PATH="$PATH:/home/Your username/maven/bin:/usr/pgsql-11/bin"  
-  export PATH  
+  export PATH
+  ```
   ###### Restart profile
+  ```
   source /etc/profile  
-  
-  ###### est 
+  ```
+  ###### Test
+  ```
   mvn -v  
-  
+  ```
   ### 5. PL\JAVA 1.5.6
-  
+  ```
   sudo yum install pljava-11.x86_64  
+  ```
   ###### Setting in PostgreSQL for PL/Java
+  ```
   cd /var/lib/pgsql/11/data  
   sudo vi postgresql.conf  
+  ```
   ###### Add the following lines for the pljava setting
+  ```
   pljava.classpath='/usr/pgsql-11/share/pljava/pljava-1.5.6.jar'  
   pljava.libjvm_location='/usr/lib/jvm/java-1.8.0-openjdk/jre/lib/amd64/server/libjvm.so'  
+  ```
   ###### Restart of PostgreSQL
+  ```
   systemctl restart postgresql-11.service 
-  
+  ```
   ### 6. PostGIS 2.5
-  
+  ```
   sudo yum install -y libtool libxml2 libxml2-devel libxslt libxslt-devel json-c json-c-devel cmake gmp gmp-devel mpfr mpfr-devel boost-devel pcre-  devel   
   sudo yum install -y postgis25_11  
   systemctl restart postgresql-11.service   
-  
+  ```
   ### 7. UrbanSQL
   cd /tmp   
   wget https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/proj_berlinmod/target/proj-0.0.1-SNAPSHOT.jar    
