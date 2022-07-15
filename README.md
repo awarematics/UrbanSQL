@@ -84,7 +84,7 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   cd /var/lib/pgsql/11/data  
   sudo vi postgresql.conf  
   ```
-  ###### Add the following lines for the pljava setting
+  ###### Add the following lines for the PL/Java setting
   ```
   pljava.classpath='/usr/pgsql-11/share/pljava/pljava-1.5.6.jar'  
   pljava.libjvm_location='/usr/lib/jvm/java-1.8.0-openjdk/jre/lib/amd64/server/libjvm.so'  
@@ -112,9 +112,13 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   select sqlj.set_classpath('public', 'jar1:jar2');    
   select sqlj.get_classpath('public'); 
   ```
-  ###### Install UrbanSQL Execution Functions
-   Visited from github: https://github.com/awarematics/UrbanSQL/tree/main/PostgreSQL/01.install , and execute the sql file in the order of 01 - 09.
-  ######  End
+  ###### Download UrbanSQL execution functions
+   cd /tmp/
+   wget https://github.com/awarematics/UrbanSQL/tree/main/PostgreSQL/01.install 
+   su - 
+   su postgres
+   psql -h localhost -p 5432 -U postgres -d postgres -f /tmp/01.install/installation.sql
+  ###### 
 # Tutorials 
 ## Supported Types
 ```
@@ -146,10 +150,10 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
 SELECT addmgeometrycolumn( 'trip', 'mpoint', 'mpoint');
 
 // detail settings : Add a trip column as a mpoint type with 
-// 'public' :
-// 4326 :
-// 2 :  
-// 50
+// 'public' : The schema_name is the name of the table schema
+// 4326 :  The srid must be an integer value reference to an entry in the SPATIAL_REF_SYS table
+// 2 :  Dimension
+// 50 : Number of splits
  SELECT addmgeometrycolumn('public', 'Trip', 'mpoint', 4326, 'mpoint', 2, 50);
 
 ```
@@ -166,7 +170,7 @@ insert into Trip values(3, '22A0002', 2);
 
 ### Insert a mpoint trip for a feature object 
 ```
-
+Update
 
 
 
