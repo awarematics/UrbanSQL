@@ -138,11 +138,14 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
 
 ```
   CREATE TABLE Trip(
-	CarId integer primary key,
-	TripId varchar
+	carId INTEGER PRIMARY KEY,
+	tripId varchar?????
 	);
+ // Add a trip column as a mpoint type.	
+ SELECT addmgeometrycolumn('public', 'Trip', 'mpoint', 4326, 'mpoint', 2, 50);
+
 ```
-### Insert Examples 
+### Insert a feature object 
 ```
 
 insert into Trip values(1, 1);
@@ -152,7 +155,6 @@ insert into Trip values(2, 2);
 insert into Trip values(3, 1);
 insert into Trip values(3, 2);
 
-Select addmgeometrycolumn('public', 'Trip', 'mpoint', 4326, 'mpoint', 2, 50);
 
 ```
 ### Temporal queries
