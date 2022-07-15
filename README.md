@@ -137,23 +137,37 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
 ### Create TABLE and Update data 
 
 ```
-  CREATE TABLE Trip(
+  CREATE TABLE trip(
 	carId INTEGER PRIMARY KEY,
-	tripId varchar?????
+	plateNum VARCHAR,
+	tripId INTGER
 	);
- // Add a trip column as a mpoint type.	
+// Add a trip column as a mpoint type.	
+SELECT addmgeometrycolumn( 'trip', 'mpoint', 'mpoint');
+
+// detail settings : Add a trip column as a mpoint type with 
+// 'public' :
+// 4326 :
+// 2 :  
+// 50
  SELECT addmgeometrycolumn('public', 'Trip', 'mpoint', 4326, 'mpoint', 2, 50);
 
 ```
 ### Insert a feature object 
 ```
 
-insert into Trip values(1, 1);
-insert into Trip values(1, 2);
-insert into Trip values(2, 1);
-insert into Trip values(2, 2);
-insert into Trip values(3, 1);
-insert into Trip values(3, 2);
+insert into Trip values(1, '22A0001', 1);
+insert into Trip values(1, '22A0001', 2);
+insert into Trip values(2, '22A0002', 1);
+insert into Trip values(2, '22A0002', 2);
+insert into Trip values(3, '22A0002', 1);
+insert into Trip values(3, '22A0002', 2);
+
+
+### Insert a mpoint trip for a feature object 
+```
+
+
 
 
 ```
