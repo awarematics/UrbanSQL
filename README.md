@@ -116,11 +116,13 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   select sqlj.get_classpath('public'); 
   ```
   ###### Download UrbanSQL execution functions
+   ```
    cd /tmp/
    wget https://github.com/awarematics/UrbanSQL/tree/main/PostgreSQL/01.install 
    su - 
    su postgres
    psql -h localhost -p 5432 -U postgres -d postgres -f /tmp/01.install/installation.sql
+   ```
   ###### 
 # Tutorials 
 ## Supported Types
