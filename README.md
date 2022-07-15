@@ -159,7 +159,7 @@ SELECT addmgeometrycolumn( 'trip', 'mpoint', 'mpoint');
 // 4326 :  The srid must be an integer value reference to an entry in the SPATIAL_REF_SYS table
 // 2 :  Dimension
 // 50 : Number of splits
- SELECT addmgeometrycolumn('public', 'Trip', 'mpoint', 4326, 'mpoint', 2, 50);
+ SELECT addmgeometrycolumn('public', 'trip', 'mpoint', 4326, 'mpoint', 2, 50);
 
 ```
 ### Insert a feature object 
