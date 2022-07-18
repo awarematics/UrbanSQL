@@ -171,7 +171,7 @@ insert into Trip values(2, '22A0002', 1);
 insert into Trip values(2, '22A0002', 2);
 insert into Trip values(3, '22A0002', 1);
 insert into Trip values(3, '22A0002', 2);
-
+```
 
 ### Insert a mpoint trip for a feature object 
 ```
@@ -204,9 +204,6 @@ UPDATE trip
 SET    mpoint = append(mpoint, ('MPOINT ((1 1) 1180389003000, (1 2)@1180389004000)' ) 
 WHERE  carid = 3
 AND    tripid = 2;
-
-
-
 ```
 ### Temporal queries
 
