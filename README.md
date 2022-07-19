@@ -1,5 +1,5 @@
 # UrbanSQL
-UrbanSQL is an open source database extension based on PostgreSQL and PostGIS for managing spatio-temporal data  
+UrbanSQL is an open source database extension based on PostgreSQL and PostGIS for managing spatiotemporal data  
 ***
 # Installation
 ## Requirements
