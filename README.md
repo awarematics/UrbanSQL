@@ -102,8 +102,8 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   ### 7. UrbanSQL
   ```
   cd /tmp   
-  wget https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/proj_berlinmod/target/proj-0.0.1-SNAPSHOT.jar    
-  wget https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/proj_berlinmod/jts-core-1.15.0-SNAPSHOT.jar  
+  wget https://github.com/awarematics/UrbanSQL/blob/main/proj/target/proj-0.0.1-SNAPSHOT.jar 
+  wget https://github.com/awarematics/UrbanSQL/blob/main/proj/jts-core-1.15.0-SNAPSHOT.jar
   ```
   ###### Open database or pgAdmin 
   ```
