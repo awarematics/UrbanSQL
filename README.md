@@ -176,32 +176,32 @@ insert into Trip values(3, '22A0002', 2);
 ### Insert a mpoint trip for a feature object 
 ```
 UPDATE trip 
-SET    mpoint = append(mpoint, ('MPOINT ((1 1) 1180389003000, (1 2)@1180389004000)' ) 
+SET    mpoint = append(mpoint, ('MPOINT ((1 1) 1180389003000, (1 2) 1180389004000)' ) 
 WHERE  carid  = 1
 AND    tripid = 1;
 
 UPDATE trip 
-SET    mpoint = append(mpoint, ('MPOINT ((1 3) 1180389005000, (1 4)@1180389006000)' ) 
+SET    mpoint = append(mpoint, ('MPOINT ((1 3) 1180389005000, (1 4) 1180389006000)' ) 
 WHERE  carid = 1
 AND    tripid = 2;
 
 UPDATE trip 
-SET    mpoint = append(mpoint, ('MPOINT ((2 1) 1180389003000, (2 2)@1180389004000)' ) 
+SET    mpoint = append(mpoint, ('MPOINT ((2 1) 1180389003000, (2 2) 1180389004000)' ) 
 WHERE  carid = 2
 AND    tripid = 1;
 
 UPDATE trip 
-SET    mpoint = append(mpoint, ('MPOINT ((2 3) 1180389003000, (2 4)@1180389004000)' ) 
+SET    mpoint = append(mpoint, ('MPOINT ((2 3) 1180389003000, (2 4) 1180389004000)' ) 
 WHERE  carid = 2
 AND    tripid = 2;
 
 UPDATE trip 
-SET    mpoint = append(mpoint, ('MPOINT ((3 1) 1180389003000, (3 2)@1180389004000)' ) 
+SET    mpoint = append(mpoint, ('MPOINT ((3 1) 1180389003000, (3 2) 1180389004000)' ) 
 WHERE  carid = 3
 AND    tripid = 1;
 
 UPDATE trip 
-SET    mpoint = append(mpoint, ('MPOINT ((3 3) 1180389003000, (3 4)@1180389004000)' ) 
+SET    mpoint = append(mpoint, ('MPOINT ((3 3) 1180389003000, (3 4) 1180389004000)' ) 
 WHERE  carid = 3
 AND    tripid = 2;
 ```
