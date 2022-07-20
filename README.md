@@ -110,7 +110,7 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   create extension postgis;
   create extension pljava;
   
-  select sqlj.install_jar('file:/tmp/proj/target/proj-0.0.1-SNAPSHOT.jar', 'jar1', true);    
+  select sqlj.install_jar('file:/tmp/proj/target/mgeometry-0.0.2', 'jar1', true);    
   select sqlj.install_jar('file:/tmp/jts-core-1.15.0-SNAPSHOT.jar', 'jar2', true);    
   select sqlj.set_classpath('public', 'jar1:jar2');    
   select sqlj.get_classpath('public'); 
