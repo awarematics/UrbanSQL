@@ -209,129 +209,127 @@ AND    tripid = 2;
 
 ```
 
+SELECT M_At('MPOINT ((6 6) 4000, (10 2) 5000)', 4500);  wrong 
+SELECT M_At('MPOINT ((6 6) 4000, (10 2) 5000)', 1);  right
+	------>Return: MPOINT ((6.0 6.0) 4000)
 SELECT M_At('MPOINT ((6 6) 4000, (10 2) 5000)', 4500);
-	------>Return: ?????
 
-SELECT M_At('MPOINT ((6 6) 4000, (10 2) 5000)', 4500);
 
-SELECT M_At('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 2);
-	------>Return: (,,"{""(40.77,-73.96)""}","{""2017-09-02 08:14:23""}")
-
-SELECT M_NumOf('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
+SELECT M_NumOf('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)');
 	------>Return: 2
 	
 SELECT carId, tripId, M_NumOf( traj )
 FROM trips;
-----> 
- carId  tripId, m_numof()
-  1   1   6
-  2   1   7   
+----> carId   tripId   m_numof()
+        1      1          6
+        2      1          7   
 
 SELECT M_TIME( 'MPOINT ((6 6) 4000, (10 2) 5000)' );
-    ---> Return [ 4000, 5000 ]
+    ---> Return ( 4000 5000 )
     
 SELECT M_TIME( traj )
 FROM trips;
----> Return : [ 4000, 5000 ]
+--->        m_time
+	( 1000 8000 )
+        ( 2000 7000 )
 
 
-SELECT M_Time('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
-	------>Return:(1504354462000,1504354501000)
+SELECT M_StartTime('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)');
+	------>Return: 1000
+	
+SELECT M_StartTime('MPOINT ((3 4) 2000, (5 4) 3000), (8 5) 4000), (10 7) 5000), (7 8) 6000), (2 5) 7000)');
+	------>Return: 2000
+	
+SELECT M_StartTime(traj)
+FROM Trips;
+--->    M_StartTime(traj)
+	     1000
+	     2000
 
-SELECT M_StartTime('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
-	------>Return:1504354462000
+SELECT M_EndTime('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)');
+	------>Return: 7000
+	
+SELECT M_EndTime('MPOINT ((3 4) 2000, (5 4) 3000), (8 5) 4000), (10 7) 5000), (7 8) 6000), (2 5) 7000)');
+	------>Return: 7000
+	
+SELECT M_EndTime(traj)
+FROM Trips;
+--->    M_EndTime()
+	     7000
+	     7000
 
-SELECT M_EndTime('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
-	------>Return:1504354501000
+SELECT M_Spatial('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)');
+	------>Return:LINESTRING (3 6, 4 7, 5 6, 7 6, 10 2, 7 3, 3 2)
 
-SELECT M_Spatial('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
-	------>Return:LINESTRING(40.77 -73.95,40.77 -73.96)
+SELECT M_Spatial(traj)
+FROM Trips
+---> M_Spatial()
+LINESTRING (3 6, 4 7, 5 6, 7 6, 10 2, 7 3, 3 2)
+LINESTRING (3 4, 5 4, 8 5, 10 7, 7 8, 2 5)
 
-SELECT M_Snapshot('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 1000);
-	------>Return:POINT(40.77 -73.95)
+SELECT M_Snapshot('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)',1000);
+	------>Return:POINT (3 6)
 
-SELECT M_Slice('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'Period (1100, 1200)');
-	------>Return:(,,"{""(40.77,-73.95)"",""(40.77,-73.96)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}")
+SELECT M_Snapshot(traj)
+FROM Trips;
+---> M_snapshot()
+      POINT (3 6)
+      MPOINT()
 
-SELECT M_Lattice('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 2000);
-	------>Return:(,,"{""(40.77,-73.95)""}","{""2017-09-02 08:14:22""}")
+SELECT M_Slice('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)','Period (2000, 5000)');
+	------>Return: MPOINT ((4.0 7.0) 2000, (5.0 6.0) 3000, (7.0 6.0) 4000, (10.0 2.0) 5000)
 
-SELECT M_tOverlaps('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'Period (1100, 2200)');
+SELECT M_Slice(traj)
+FROM Trips;
+---> M_Slice()
+    MPOINT ((4.0 7.0) 2000, (5.0 6.0) 3000, (7.0 6.0) 4000, (10.0 2.0) 5000)
+    MPOINT ((3.0 4.0) 2000, (5.0 4.0) 3000, (8.0 5.0) 4000, (10.0 7.0) 5000)
+
+SELECT M_Lattice('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)',1000);
+	------>Return:MPOINT ((4.0 7.0) 2000, (5.0 6.0) 3000, (7.0 6.0) 4000, (10.0 2.0) 5000, (7.0 3.0) 6000)
+
+SELECT M_Lattice('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)',2000);
+	------>Return:MPOINT ((4.0 7.0) 2000, (7.0 6.0) 4000, (7.0 3.0) 6000)
+
+SELECT M_Lattice(Trip,3000)
+FROM Trips;
+--->  M_Lattice
+    MPOINT ((5.0 6.0) 3000, (7.0 3.0) 6000)
+    MPOINT ((5.0 4.0) 3000, (7.0 8.0) 6000)
+    
+SELECT M_Overlaps('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)','Period (2000, 7000)');
 	------>Return: true
 
-SELECT M_At(mt, 2) FROM usertrajs;
-	------>Return: (1,286114,"{""(40.77,-73.96)""}","{""2017-09-02 08:14:23""}")
-
-SELECT M_NumOf(mt) FROM usertrajs;
-	------>Return: 2
-
-SELECT M_Time(mt) FROM usertrajs;
-	------>Return:(1504354462000,1504354501000)
-
-SELECT M_StartTime(mt) FROM usertrajs;
-	------>Return:1504354462000
-
-SELECT M_EndTime(mt) FROM usertrajs;
-	------>Return:1504354501000
-
-SELECT M_Spatial(mt) FROM usertrajs;
-	------>Return:LINESTRING(40.77 -73.95,40.77 -73.96)
-
-SELECT M_Snapshot(mt, 1000) FROM usertrajs;
-	------>Return:POINT(40.77 -73.95)
-
-SELECT M_Slice(mt, 'Period (1100, 1200)') FROM usertrajs;
-	------>Return:(1,286114,"{""(40.77,-73.95)"",""(40.77,-73.96)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}")
-
-SELECT M_Lattice(mt, 2000) FROM usertrajs;
-	------>Return:(1,286114,"{""(40.77,-73.95)""}","{""2017-09-02 08:14:22""}")
-
-SELECT M_tOverlaps(mt, 'Period (1100, 2200)') FROM usertrajs;
-	------>Return: true
-
+SELECT M_tOverlaps(traj, 'Period (1100, 2200)') 
+FROM Trips;
+---> m_overlaps
+       true
+       true
+       
 ### Spatial and spatiotemporal queries
+	
+SELECT M_TimeAtCummulative('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 1);
+	------>Return: POINT ((3.0 6.0) 1000, (4.0 7.0) 2000, (5.0 6.0) 3000, (7.0 6.0) 4000, (10.0 2.0) 5000, (7.0 3.0) 6000, (3.0 2.0) 7000)
 
-SELECT M_TimeAtCummulative('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 2);
-	------>Return: 1504354471666
-
-SELECT M_Slice('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
-	------>Return:(,,"{""(40.77,-73.95)"",""(40.77,-73.96)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
-
-SELECT M_SnapToGrid('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 1);
-	------>Return:(,,"{""(40.8,-74.0)"",""(40.8,-74.0)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
-
-SELECT M_mEnters('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+SELECT M_Enters('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:false
 
-SELECT M_mBypasses('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+SELECT M_Bypasses('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:false
 
-SELECT M_mStayIn('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
-	------>Return:true
-
-SELECT M_mLeaves('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+SELECT M_Leaves('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:false
 
-SELECT M_mCrosses('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+SELECT M_Crosses('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:false
 	
-SELECT M_Direction('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
-	------>Return: (,,"{0,-0.08}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+SELECT M_Direction('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)');
+	------>Return: MDOUBLE (63.63961030678928 1000, 63.63961030678928 2000, -63.63961030678928 3000, 0.0 4000, NaN 5000, 28.460498941515414 6000, -21.828206253269965 7000)
 	
 SELECT M_VelocityAtTime('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 1500);
 	------>Return: 1.37
 	
-SELECT M_AccelerationAtTime('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 1500);
-	------>Return: 0.0006
-	
-SELECT M_Max('MDOUBLE (1.002 1503828254949, 1.042 1503828254969)');
-	------>Return: 1.042
-	
-SELECT M_Min('MDOUBLE (1.002 1503828254949, 1.042 1503828254969)');
-	------>Return: 1.002
-	
-SELECT M_Avg('MDOUBLE (1.002 1503828254949, 1.042 1503828254969)');
-	------>Return: 1.022
+
 	
 SELECT M_DWithin('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 
 	'MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000, 
@@ -340,12 +338,12 @@ SELECT M_DWithin('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)',
 ``` 
 ### K Nearest Neighbors Query
 ```
-SELECT M_KNN(t.mpoint,'POINT (1 5)',3)
+SELECT M_KNN(t.traj,'POINT (1 5)',3)
 FROM Trip t;
 
-SELECT M_KNN(t.mpoint,p.point,3)
+SELECT M_KNN(t.traj,p.point,3)
 FROM Trip t,Points p;
 
-SELECT M_KNN(t1.mpoint,t2.mpoint,3)
+SELECT M_KNN(t1.traj,t2.traj,3)
 FROM Trip t,Trip t;
 ```
