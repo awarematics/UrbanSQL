@@ -146,13 +146,13 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
 ### Create TABLE and Update data 
 
 ```
-  CREATE TABLE trip(
+  CREATE TABLE trips(
 	carId INTEGER PRIMARY KEY,
 	plateNum VARCHAR,
 	tripId INTGER
 	);
 // Add a trip column as a mpoint type.	
-SELECT addmgeometrycolumn( 'trip', 'mpoint', 'mpoint');
+SELECT addmgeometrycolumn( 'traj', 'mpoint', 'mpoint');
 
 // detail settings : Add a trip column as a mpoint type with 
 // 'public' : The schema_name is the name of the table schema
@@ -209,11 +209,31 @@ AND    tripid = 2;
 
 ```
 
+SELECT M_At('MPOINT ((6 6) 4000, (10 2) 5000)', 4500);
+	------>Return: ?????
+
+SELECT M_At('MPOINT ((6 6) 4000, (10 2) 5000)', 4500);
+
 SELECT M_At('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 2);
 	------>Return: (,,"{""(40.77,-73.96)""}","{""2017-09-02 08:14:23""}")
 
 SELECT M_NumOf('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
 	------>Return: 2
+	
+SELECT carId, tripId, M_NumOf( traj )
+FROM trips;
+----> 
+ carId  tripId, m_numof()
+  1   1   6
+  2   1   7   
+
+SELECT M_TIME( 'MPOINT ((6 6) 4000, (10 2) 5000)' );
+    ---> Return [ 4000, 5000 ]
+    
+SELECT M_TIME( traj )
+FROM trips;
+---> Return : [ 4000, 5000 ]
+
 
 SELECT M_Time('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
 	------>Return:(1504354462000,1504354501000)
