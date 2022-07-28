@@ -175,8 +175,9 @@ insert into Trip values(3, '22A0002', 2);
 
 ### Insert a mpoint trip for a feature object 
 ```
+* MPOINT( 
 UPDATE trip 
-SET    mpoint = append(mpoint, ('MPOINT ((1 1) 1180389003000, (1 2) 1180389004000)' ) 
+SET    mpoint = append(mpoint, ('MPOINT ((1 1) 1180389003000, (1 2) 1180389004000) ' ) 
 WHERE  carid  = 1
 AND    tripid = 1;
 
