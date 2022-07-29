@@ -175,7 +175,7 @@ insert into Trip values(3, '22A0002', 2);
 
 ### Insert a mpoint trip for a feature object 
 
-![Alt text](https://github.com/awarematics/UrbanSQL/blob/main/lou/example.jpg)  
+ <! -- ![Alt text](https://github.com/awarematics/UrbanSQL/blob/main/lou/example.jpg)   -->   
 <img src="https://github.com/awarematics/UrbanSQL/blob/main/lou/example.jpg" width="50%" height="50%" alt="example"/><br/>
 
 ```
