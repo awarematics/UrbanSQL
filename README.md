@@ -176,7 +176,7 @@ insert into Trip values(2, '22A0001', 1 );
 <img src="https://github.com/awarematics/UrbanSQL/blob/main/lou/example.jpg" width="50%" height="50%" alt="example"/><br/>
 
 ```
-MPOINT( 
+
 UPDATE trip 
 SET    mpoint = append(mpoint, ('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)' ) 
 WHERE  carid  = 1
