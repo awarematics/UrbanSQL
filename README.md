@@ -165,12 +165,10 @@ SELECT addmgeometrycolumn( 'traj', 'mpoint', 'mpoint');
 ### Insert a feature object 
 ```
 
-insert into Trip values(1, '22A0001', 1);
-insert into Trip values(1, '22A0001', 2);
-insert into Trip values(2, '22A0002', 1);
-insert into Trip values(2, '22A0002', 2);
-insert into Trip values(3, '22A0002', 1);
-insert into Trip values(3, '22A0002', 2);
+insert into Trip values(1, '22A0001', 1 );
+
+insert into Trip values(2, '22A0001', 1 );
+
 ```
 
 ### Insert a mpoint trip for a feature object 
@@ -180,34 +178,15 @@ insert into Trip values(3, '22A0002', 2);
 ```
 MPOINT( 
 UPDATE trip 
-SET    mpoint = append(mpoint, ('MPOINT ((1 1) 1180389003000, (1 2) 1180389004000) ' ) 
+SET    mpoint = append(mpoint, ('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)' ) 
 WHERE  carid  = 1
 AND    tripid = 1;
 
 UPDATE trip 
-SET    mpoint = append(mpoint, ('MPOINT ((1 3) 1180389005000, (1 4) 1180389006000)' ) 
-WHERE  carid = 1
-AND    tripid = 2;
-
-UPDATE trip 
-SET    mpoint = append(mpoint, ('MPOINT ((2 1) 1180389003000, (2 2) 1180389004000)' ) 
+SET    mpoint = append(mpoint, ('MPOINT ((3 4) 2000, (5 4) 3000), (8 5) 4000), (10 7) 5000), (7 8) 6000), (2 5) 7000)' ) 
 WHERE  carid = 2
 AND    tripid = 1;
 
-UPDATE trip 
-SET    mpoint = append(mpoint, ('MPOINT ((2 3) 1180389003000, (2 4) 1180389004000)' ) 
-WHERE  carid = 2
-AND    tripid = 2;
-
-UPDATE trip 
-SET    mpoint = append(mpoint, ('MPOINT ((3 1) 1180389003000, (3 2) 1180389004000)' ) 
-WHERE  carid = 3
-AND    tripid = 1;
-
-UPDATE trip 
-SET    mpoint = append(mpoint, ('MPOINT ((3 3) 1180389003000, (3 4) 1180389004000)' ) 
-WHERE  carid = 3
-AND    tripid = 2;
 ```
 ### Temporal queries
 
