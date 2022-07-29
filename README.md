@@ -75,7 +75,7 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
   ```
   mvn -v  
   ```
-  ### 5. PL\Jjava 1.5.6
+  ### 5. PL\Java 1.5.6
   ```
   sudo yum install pljava-11.x86_64  
   ```
