@@ -165,9 +165,9 @@ SELECT addmgeometrycolumn( 'traj', 'mpoint', 'mpoint');
 ### Insert a feature object 
 ```
 
-insert into Trip values(1, '22A0001', 1 );
+insert into trips values(1, '22A0001', 1 );
 
-insert into Trip values(2, '22A0001', 1 );
+insert into trips values(2, '22A0001', 1 );
 
 ```
 
@@ -177,12 +177,12 @@ insert into Trip values(2, '22A0001', 1 );
 
 ```
 
-UPDATE trip 
+UPDATE trips 
 SET    mpoint = append(mpoint, ('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)' ) 
 WHERE  carid  = 1
 AND    tripid = 1;
 
-UPDATE trip 
+UPDATE trips 
 SET    mpoint = append(mpoint, ('MPOINT ((3 4) 2000, (5 4) 3000), (8 5) 4000), (10 7) 5000), (7 8) 6000), (2 5) 7000)' ) 
 WHERE  carid = 2
 AND    tripid = 1;
