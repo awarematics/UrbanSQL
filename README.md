@@ -7,7 +7,7 @@ UrbanSQL is an open source database extension based on PostgreSQL and PostGIS fo
  2. PostgreSQL 11
  3. JDK 1.8
  4. Maven 3.3.9 (Optional)
- 5. PL\JAVA 1.5.6
+ 5. PL\Java 1.5.6
  6. PostGIS 2.5
 ### 2. PostgreSQL 11
   ```
