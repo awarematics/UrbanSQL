@@ -193,15 +193,21 @@ AND    tripid = 1;
 
 ```
 
-SELECT M_At('MPOINT ((6 6) 4000, (10 2) 5000)', 4500);  wrong 
+Query 1 :adfkadfadf
 SELECT M_At('MPOINT ((6 6) 4000, (10 2) 5000)', 1);  right
 	------>Return: MPOINT ((6.0 6.0) 4000)
-SELECT M_At('MPOINT ((6 6) 4000, (10 2) 5000)', 4500);
+	
+Query 2 :adfkadfadf	
+SELECT M_At(traj)
+FROM trips;
 
+Query 1 :adfkadfadf
 
 SELECT M_NumOf('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)');
 	------>Return: 2
-	
+
+Query 1 :adfkadfadf
+
 SELECT carId, tripId, M_NumOf( traj )
 FROM trips;
 ----> carId   tripId   m_numof()
@@ -218,7 +224,7 @@ FROM trips;
         ( 2000 7000 )
 
 
-SELECT M_StartTime('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)');
+SELECT M_StartTime('MPOINT ((3 6) 1000, (7 3) 6000), (3 2) 7000)');
 	------>Return: 1000
 	
 SELECT M_StartTime('MPOINT ((3 4) 2000, (5 4) 3000), (8 5) 4000), (10 7) 5000), (7 8) 6000), (2 5) 7000)');
@@ -230,9 +236,7 @@ FROM Trips;
 	     1000
 	     2000
 
-SELECT M_EndTime('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)');
-	------>Return: 7000
-	
+
 SELECT M_EndTime('MPOINT ((3 4) 2000, (5 4) 3000), (8 5) 4000), (10 7) 5000), (7 8) 6000), (2 5) 7000)');
 	------>Return: 7000
 	
@@ -246,7 +250,7 @@ SELECT M_Spatial('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10
 	------>Return:LINESTRING (3 6, 4 7, 5 6, 7 6, 10 2, 7 3, 3 2)
 
 SELECT M_Spatial(traj)
-FROM Trips
+FROM Trips;
 ---> M_Spatial()
 LINESTRING (3 6, 4 7, 5 6, 7 6, 10 2, 7 3, 3 2)
 LINESTRING (3 4, 5 4, 8 5, 10 7, 7 8, 2 5)
