@@ -168,7 +168,7 @@ SELECT addmgeometrycolumn( 'traj', 'mpoint', 'mpoint');
 
 insert into trips values(1, '22A0001', 1 );
 
-insert into trips values(2, '22A0001', 1 );
+insert into trips values(2, '22A0002', 1 );
 
 ```
 
@@ -193,20 +193,20 @@ AND    tripid = 1;
 
 ```
 
-Query 1 :adfkadfadf
-SELECT M_At('MPOINT ((6 6) 4000, (10 2) 5000)', 1);  right
+Query 1 : Return the first point of a trjaectory.
+SELECT M_At('MPOINT ((6 6) 4000, (10 2) 5000)', 1);  
 	------>Return: MPOINT ((6.0 6.0) 4000)
 	
-Query 2 :adfkadfadf	
+Query 2 : Return the first point of a trjaectory in the trips table	
 SELECT M_At(traj)
 FROM trips;
 
-Query 1 :adfkadfadf
+Query 3 : Return number of a trajectory
 
 SELECT M_NumOf('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)');
-	------>Return: 2
+	------>Return: 7
 
-Query 1 :adfkadfadf
+Query 4 : Return number of a trajectories in the trips table
 
 SELECT carId, tripId, M_NumOf( traj )
 FROM trips;
@@ -214,92 +214,95 @@ FROM trips;
         1      1          6
         2      1          7   
 
+Query 5 : Return time range of a trajectory
 SELECT M_TIME( 'MPOINT ((6 6) 4000, (10 2) 5000)' );
     ---> Return ( 4000 5000 )
-    
+
+Query 6 : Return time range of a trajectories in the trips table
 SELECT M_TIME( traj )
 FROM trips;
 --->        m_time
 	( 1000 8000 )
         ( 2000 7000 )
 
-
+Query 7 : Return start time of a trajectory
 SELECT M_StartTime('MPOINT ((3 6) 1000, (7 3) 6000), (3 2) 7000)');
 	------>Return: 1000
-	
-SELECT M_StartTime('MPOINT ((3 4) 2000, (5 4) 3000), (8 5) 4000), (10 7) 5000), (7 8) 6000), (2 5) 7000)');
-	------>Return: 2000
-	
+
+Query 8 : Return time range of a trajectories in the trips table	
 SELECT M_StartTime(traj)
 FROM Trips;
 --->    M_StartTime(traj)
 	     1000
 	     2000
 
-
+Query 9 : Return end time of a trajectory
 SELECT M_EndTime('MPOINT ((3 4) 2000, (5 4) 3000), (8 5) 4000), (10 7) 5000), (7 8) 6000), (2 5) 7000)');
 	------>Return: 7000
-	
+
+Query 10 : Return end time of a trajectories in the trips table
 SELECT M_EndTime(traj)
 FROM Trips;
 --->    M_EndTime()
-	     7000
-	     7000
-
+	   7000
+	   7000
+	     
+Query 11 : Return the geometry representation of a trajectory
 SELECT M_Spatial('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)');
 	------>Return:LINESTRING (3 6, 4 7, 5 6, 7 6, 10 2, 7 3, 3 2)
 
+Query 12 : Return the geometry representation of a trajectories in the trips table
 SELECT M_Spatial(traj)
 FROM Trips;
 ---> M_Spatial()
 LINESTRING (3 6, 4 7, 5 6, 7 6, 10 2, 7 3, 3 2)
 LINESTRING (3 4, 5 4, 8 5, 10 7, 7 8, 2 5)
 
+Query 13 : Return to a geometry representation of the trajectory of 1000 instant
 SELECT M_Snapshot('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)',1000);
 	------>Return: POINT (3 6)
-	
-SELECT M_Snapshot('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)',1500);
-	------>Return:  NULL
-	
+
+Query 14 : Return the geometry representation of the trajectories of 1000 instant in the trips table	
 SELECT M_Snapshot(traj)
 FROM Trips;
 ---> M_snapshot()
       POINT (3 6)
       MPOINT()
 
+Query 15 : Return a sliced sub trajectory by a period	
 SELECT M_Slice('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)','Period (2000, 5000)');
 	------>Return: MPOINT ((4.0 7.0) 2000, (5.0 6.0) 3000, (7.0 6.0) 4000, (10.0 2.0) 5000)
 
-SELECT M_Slice('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)','Period (2500, 5500)');
-	------>Return: MPOINT ((5.0 6.0) 3000, (7.0 6.0) 4000, (10.0 2.0) 5000)
-	
+Query 16 : Return a sliced sub trajectory by a period in the trips table		
 SELECT M_Slice(traj, 'Period (2500, 5500)')
 FROM Trips;
 ---> M_Slice()
     MPOINT ((4.0 7.0) 2000, (5.0 6.0) 3000, (7.0 6.0) 4000, (10.0 2.0) 5000)
     MPOINT ((3.0 4.0) 2000, (5.0 4.0) 3000, (8.0 5.0) 4000, (10.0 7.0) 5000)
 
+Query 17 : Return a latticed trajectory by 500 intant 		
 SELECT M_Lattice('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 500);
 	------>Return: MPOINT ((3.5 6.5) 1500, (4.0 7.0) 2000, (4.5 6.5) 2500, (5.0 6.0) 3000, (6.0 6.0) 3500, (7.0 6.0) 4000,
 	               (8.5 4.0) 4500, (10.0 2.0) 5000, (8.5 2.5) 5500, (7.0 3.0) 6000, (5.0 2.5) 6500)
-	
-SELECT M_Lattice('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)',2000);
-	------>Return: MPOINT ((4.0 7.0) 2000, (7.0 6.0) 4000, (7.0 3.0) 6000)
 
-SELECT M_Lattice(Trip,3000)
+Query 18 : Return a latticed trajectories by 500 intant in the tirps table		
+SELECT M_Lattice(traj,3000)
 FROM Trips;
 --->  M_Lattice
     MPOINT ((5.0 6.0) 3000, (7.0 3.0) 6000)
     MPOINT ((5.0 4.0) 3000, (7.0 8.0) 6000)
-    
+ 
+ Query 19 : Return TRUE if a trajectory "period overlap"		
 SELECT M_Overlaps('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)','Period (2000, 7000)');
-	------>Return: true
+	------>Return: TRUE
 
-SELECT M_tOverlaps(traj, 'Period (1100, 2200)') 
-FROM Trips;
----> m_overlaps
-       true
-       true
+ Query 20 : Returns TRUE if trajectories "period overlap" in the trips table		
+SELECT *
+FROM Trips
+WHERE M_tOverlaps(traj, 'Period (1100, 2200)') ;
+---> carid m_overlaps
+       TRUE
+       TRUE
        
 ### Spatial and spatiotemporal queries
 	
