@@ -293,11 +293,11 @@ FROM Trips;
     MPOINT ((5.0 6.0) 3000, (7.0 3.0) 6000)
     MPOINT ((5.0 4.0) 3000, (7.0 8.0) 6000)
  
- Query 19 : Return TRUE if a trajectory "period overlap"		
+Query 19 : Return TRUE if a trajectory "period overlap"		
 SELECT M_Overlaps('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)','Period (2000, 7000)');
 	------>Return: TRUE
 
- Query 20 : Returns TRUE if trajectories "period overlap" in the trips table		
+Query 20 : Returns TRUE if trajectories "period overlap" in the trips table		
 SELECT *
 FROM Trips
 WHERE M_tOverlaps(traj, 'Period (1100, 2200)') ;
