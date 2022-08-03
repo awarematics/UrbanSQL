@@ -335,12 +335,12 @@ SELECT M_Direction('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (
 ``` 
 ### K Nearest Neighbors Query
 ```
-SELECT M_KNN(t.traj,'POINT (1 5)',3)
+SELECT M_knn(t.traj,'POINT (1 5)',3)
 FROM Trip t;
 
-SELECT M_KNN(t.traj,p.point,3)
+SELECT M_knn(t.traj,p.point,3)
 FROM Trip t,Points p;
 
-SELECT M_KNN(t1.traj,t2.traj,3)
+SELECT M_knn(t1.traj,t2.traj,3)
 FROM Trip t,Trip t;
 ```
