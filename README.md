@@ -198,16 +198,17 @@ SELECT M_At('MPOINT ((6 6) 4000, (10 2) 5000)', 1);
 	------>Return: MPOINT ((6.0 6.0) 4000)
 	
 Query 2 : Return the first point of a trjaectory in the trips table	
-SELECT M_At(traj)
+SELECT M_At(traj，1)
 FROM trips;
+----> carId   tripId   m_at()
+        1      1       MPOINT ((3 6) 1000)
+        2      1       MPOINT ((3 4) 2000)     
 
 Query 3 : Return number of a trajectory
-
 SELECT M_NumOf('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)');
 	------>Return: 7
 
 Query 4 : Return number of a trajectories in the trips table
-
 SELECT carId, tripId, M_NumOf( traj )
 FROM trips;
 ----> carId   tripId   m_numof()
@@ -315,19 +316,39 @@ SELECT M_Enters('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 
 SELECT carid, tripid
 FROM trips
 WHERE M_ENETER( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
----> m_overlaps
+---> m_eneter
        true
        true
 
 SELECT M_Bypasses('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:false
 
-SELECT M_Leaves('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+SELECT M_Bypasses( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
+FROM trips
+WHERE M_Bypasses( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
+---> M_bypasses
+       true
+       true
 
+SELECT M_Leaves('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:false
+	
+SELECT M_Leaves( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
+FROM trips
+WHERE M_Leaves( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
+---> M_leaves
+       true
+       true
 
 SELECT M_Crosses('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:false
+	
+SELECT M_Crosses( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
+FROM trips
+WHERE M_Crosses( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
+---> M_leaves
+       true
+       true
 	
 SELECT M_Direction('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)');
 	------>Return: MDOUBLE (63.63961030678928 1000, 63.63961030678928 2000, -63.63961030678928 3000, 0.0 4000, NaN 5000, 28.460498941515414 6000, -21.828206253269965 7000)
