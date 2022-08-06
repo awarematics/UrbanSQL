@@ -193,7 +193,7 @@ AND    tripid = 1;
 
 ```
 
-Query 1 : Return the first point of a trjaectory.
+Query 1 : Return the first point of a trjaectory
 SELECT M_At('MPOINT ((6 6) 4000, (10 2) 5000)', 1);  
 	------>Return: MPOINT ((6.0 6.0) 4000)
 	
@@ -278,8 +278,8 @@ Query 16 : Return a sliced sub trajectory by a period in the trips table
 SELECT M_Slice(traj, 'Period (2500, 5500)')
 FROM Trips;
 ---> M_Slice()
-    MPOINT ((4.0 7.0) 2000, (5.0 6.0) 3000, (7.0 6.0) 4000, (10.0 2.0) 5000)
-    MPOINT ((3.0 4.0) 2000, (5.0 4.0) 3000, (8.0 5.0) 4000, (10.0 7.0) 5000)
+    MPOINT ((5.0 6.0) 3000, (7.0 6.0) 4000, (10.0 2.0) 5000)
+    MPOINT ((5.0 4.0) 3000, (8.0 5.0) 4000, (10.0 7.0) 5000)
 
 Query 17 : Return a latticed trajectory by 500 intant 		
 SELECT M_Lattice('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 500);
@@ -307,20 +307,22 @@ WHERE M_tOverlaps(traj, 'Period (1100, 2200)') ;
        
 ### Spatial and spatiotemporal queries
 
-Query 21 : Returns TRUE if trajectories "period overlap" in the trips table		
+Query 21 : Return sum of total distance		
 SELECT M_TimeAtCummulative('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 1);
-	------>Return: POINT ((3.0 6.0) 1000, (4.0 7.0) 2000, (5.0 6.0) 3000, (7.0 6.0) 4000, (10.0 2.0) 5000, (7.0 3.0) 6000, (3.0 2.0) 7000)
+	------>Return: 1000
 	
-Query 22 : Returns TRUE if trajectories "period overlap" in the trips table		
+Query 22 : Return sum of total distance in the trips table	
 SELECT M_TimeAtCummulative(traj,1)
 FROM Trips
----> 
+--->  m_timeatcummulatiov
+	   1000
+	   1000
 
-Query 23 : Returns TRUE if trajectories "period overlap" in the trips table		
+Query 23 : Returns TRUE if trajectories "spatially enter"
 SELECT M_Enters('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 'POLYGON ((3 4, 3 7, 4 7, 4 3))');
 	------>Return:true
 
-Query 24 : Returns TRUE if trajectories "period overlap" in the trips table		
+Query 24 : Returns TRUE if trajectories "spatially enter" in the trips table		
 SELECT carid, tripid
 FROM trips
 WHERE M_Enters( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
@@ -328,11 +330,11 @@ WHERE M_Enters( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))'
        true
        true
 
-Query 25 : Returns TRUE if trajectories "period overlap" in the trips table	
+Query 25 : Return true if their intersection "spatially leave"	
 SELECT M_Bypasses('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:false
 
-Query 26 : Returns TRUE if trajectories "period overlap" in the trips table
+Query 26 : Return true if their intersection "spatially pass" in the trips table
 SELECT M_Bypasses( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
 FROM trips
 WHERE M_Bypasses( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
@@ -340,11 +342,11 @@ WHERE M_Bypasses( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))'
        true
        true
 
-Query 27 : Returns TRUE if trajectories "period overlap" in the trips table
+Query 27 : Return true if their intersection "spatially leave" 
 SELECT M_Leaves('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:false
 
-Query 28 : Returns TRUE if trajectories "period overlap" in the trips table
+Query 28 : Return true if their intersection "spatially leave" in the trips table
 SELECT M_Leaves( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
 FROM trips
 WHERE M_Leaves( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
@@ -352,11 +354,11 @@ WHERE M_Leaves( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))'
        true
        true
 
-Query 29 : Returns TRUE if trajectories "period overlap" in the trips table
+Query 29 : Return true if their intersection "spatially cross"
 SELECT M_Crosses('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:false
 
-Query 30 : Returns TRUE if trajectories "period overlap" in the trips table
+Query 30 : Return true if their intersection "spatially cross" in the trips table
 SELECT M_Crosses( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
 FROM trips
 WHERE M_Crosses( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
@@ -373,15 +375,15 @@ Query 31 : Returns TRUE if trajectories "period overlap" in the trips table
 ``` 
 ### K Nearest Neighbors Query
 ```
-Query 32 : Returns TRUE if trajectories "period overlap" in the trips table
+Query 32 : For each trajectory from Trip, list the 3 trajectories that have been closest to given point.
 SELECT M_knn(t.traj,'POINT (1 5)',3)
 FROM Trip t;
 
-Query 33 : Returns TRUE if trajectories "period overlap" in the trips table
+Query 33 : For each trajectory from Trip, list the 3 nearest points from POI that have been closest to each trajectory. 
 SELECT M_knn(t.traj,p.point,3)
-FROM Trip t,Points p;
+FROM Trip t, POI p;
 
-Query 34 : Returns TRUE if trajectories "period overlap" in the trips table
+Query 34 : For each trip from Trips, list the 3 trips that are closest to that this one
 SELECT M_knn(t1.traj,t2.traj,3)
-FROM Trip t,Trip t;
+FROM Trip t1, Trip t2;
 ```
