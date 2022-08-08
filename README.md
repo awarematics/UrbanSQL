@@ -366,11 +366,47 @@ WHERE M_Crosses( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))'
        true
        true
 
-Query 31 : Returns TRUE if trajectories "period overlap" in the trips table
+Query 31 : Returns direction of trajectories 
 SELECT M_Direction('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)');
-	------>Return: MDOUBLE (63.63961030678928 1000, 63.63961030678928 2000, -63.63961030678928 3000, 0.0 4000, NaN 5000, 28.460498941515414 6000, -21.828206253269965 7000)
+	------> Return: MDOUBLE (63.63961030678928 1000, 63.63961030678928 2000, -63.63961030678928 3000, 0.0 4000, NaN 5000, 28.460498941515414 6000, -21.828206253269965 7000)
 
-Query 31 : Returns TRUE if trajectories "period overlap" in the trips table
+Query 32 : Returns direction of trajectories in the trips table
+SELECT M_Direction(trip)
+FROM trips
+---> m_direction
+	MDOUBLE (63.63961030678928 1000, 63.63961030678928 2000, -63.63961030678928 3000, 0.0 4000, NaN 5000, 28.460498941515414 6000, -21.828206253269965 7000)
+	MDOUBLE (0.0 2000, 0.0 3000, 28.460498941515414 4000, NaN 5000, 28.460498941515414 6000, NaN 7000)
+	
+Query 33 : Returns each distance on the instantaneous merge set of two trajectories
+SELECT M_Distance('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)' ,
+		  'MPOINT ((3 4) 2000, (5 4) 3000), (8 5) 4000), (10 7) 5000), (7 8) 6000), (2 5) 7000)')
+	------> MDOUBLE (0.0 1000, 3.1622776601683795 2000, 2.5495097567963922 2500, 2.0 3000, 1.4142135623730951 4000, 0.9455009254358242 4266, 5.0 5000, 5.0 6000, 3.1622776601683795 7000)
+
+Query 34 : Return M_Distance for Trips table and trajectory
+SELECT M_Distacne(trip,'')
+
+
+Query 35 : Return whether the distance between trajectory and geography is within 100m
+SELECT M_MinDistacne(trip,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0)
+------> Return : false
+
+Query 36 : Return whether the distance between trajectory and geography is within 100m in the trips table
+SELECT M_MinDistacne(trip,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0)
+------> m_mindistance
+	    false
+	    false
+
+
+Query 37 : Return whether the distance between 2 trajectoroies is within 100m
+SELECT M_MinDistacne('MPOINT ((3 4) 2000, (5 4) 3000), (8 5) 4000), (10 7) 5000), (7 8) 6000), (2 5) 7000)','MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)',100.0 )
+------> Return ：true
+
+Query 38 : Return whether the distance between 2 trajectoroies is within 100m in the trips table
+SELECT M_MinDistacne(trip,'MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)',100.0 )
+---> m_mindistance
+	true
+	true
+	
 
 ``` 
 ### K Nearest Neighbors Query
