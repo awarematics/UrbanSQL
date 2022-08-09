@@ -314,7 +314,7 @@ SELECT M_TimeAtCummulative('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 
 Query 22 : Return sum of total distance in the trips table	
 SELECT M_TimeAtCummulative(traj,1)
 FROM Trips
---->  m_timeatcummulatiov
+--->  m_timeatcummulative
 	   1000
 	   1000
 
