@@ -413,6 +413,10 @@ SELECT M_MinDistacne(trip,'MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4
 	
 
 ``` 
+
+``` 
+### Relationship Queries
+```
 ### K Nearest Neighbors Query
 ```
 Query 32 : For each trajectory from Trip, list the 3 trajectories that have been closest to given point.
