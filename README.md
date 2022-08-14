@@ -415,9 +415,9 @@ SELECT M_MinDistacne(trip,'MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4
 	
 
 ``` 
-
-``` 
 ### Relationship Queries
+``` 
+
 
 Query 39 : Return true or false if a trajectory intersect the geometry.
 SELECT M_Intersects(trip,'MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)',100.0 )
