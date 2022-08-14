@@ -359,9 +359,9 @@ SELECT M_Crosses('MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10
 	------>Return:false
 
 Query 30 : Return true if their intersection "spatially cross" in the trips table
-SELECT M_Crosses( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
+SELECT M_Crosses( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' ) 
 FROM trips
-WHERE M_Crosses( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))' 
+WHERE M_Crosses( traj, 'POLYGON ((3 4, 3 7, 4 7, 4 3))'  )
 ---> M_leaves
        true
        true
@@ -391,11 +391,13 @@ FROM trips
 
 
 Query 35 : Return whether the distance between trajectory and geography is within 100m
-SELECT M_MinDistacne(trip,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0)
+SELECT M_MinDistacne('POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0)
+FROM trips
 ------> Return : false
 
 Query 36 : Return whether the distance between trajectory and geography is within 100m in the trips table
-SELECT M_MinDistacne(trip,'POINT (-73.9917157777343 40.7424697420008)'::geometry, 100.0)
+SELECT M_MinDistacne(trip, 100.0)
+FROM trips
 ------> m_mindistance
 	    false
 	    false
@@ -416,6 +418,27 @@ SELECT M_MinDistacne(trip,'MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4
 
 ``` 
 ### Relationship Queries
+
+Query 39 : Return true or false if a trajectory intersect the geometry.
+SELECT M_Intersects(trip,'MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)',100.0 )
+---> m_intersects
+	true
+	true
+
+Query 40 : Return true or false if a trajectory intersect the geometry in temporal.
+SELECT M_tIntersects(trip,'MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)', 'Period (2300, 7200)')
+---> m_tintersects
+	true
+	true
+
+Query 40 : Return true or false if a trajectory intersect the geometry in spatial.
+SELECT M_sIntersects(trip,'MPOINT ((3 6) 1000, (4 7) 2000), (5 6) 3000), (7 6) 4000), (10 2) 5000), (7 3) 6000), (3 2) 7000)',  'POLYGON ((3 4, 3 7, 4 7, 4 3))'  )
+FROM trips
+---> m_sintersects
+	true
+	true
+	
+
 ```
 ### K Nearest Neighbors Query
 ```
