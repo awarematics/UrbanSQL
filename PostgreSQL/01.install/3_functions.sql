@@ -982,5 +982,277 @@ ALTER FUNCTION public.m_mindistance_index(mgeometry, geometry, double precision,
     OWNER TO postgres;	
 	
 	
+CREATE OR REPLACE FUNCTION public.m_event(
+	character varying,
+	text)
+    RETURNS text
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE STRICT 
+AS $BODY$
+DECLARE
+	f_mgeometry			alias for $1;
+	f_geometry_text		alias for $2;
+	geoemtry1      geometry;
+	geoemtry2		geometry;
+	sql					text;
+	res						bool;
+	geom					geometry;
+	NumOfGeom				geometry[];
+	starttime				bigint;
+	tempgeom					geometry;
+	status					text='NULL';
+	i						int = 0;
+	mpid                integer;
+	tempresult					text;
+	path						integer;
+	result						text='';
+	distance1				double precision;
+	distance2				double precision;
+	rate					double precision;
+BEGIN
+
+
+   	geoemtry1 := m_spatial(f_mgeometry);
+	geoemtry2 := ST_GeomFromText(f_geometry_text);
+	starttime := M_Starttime(f_mgeometry);
+	res  := ST_Intersects(geoemtry1,geoemtry2);	
 	
+	IF res = FALSE THEN
+		RETURN status;
+	ELSE
+		IF ST_Disjoint(ST_StartPoint(geoemtry1),geoemtry2)  THEN
+		 status :=  replace('status','status','Enter');
+		END IF;
+		IF ST_Within(ST_StartPoint(geoemtry1),geoemtry2) THEN
+		 	status :=  replace('status','status','Leave');	
+		 END IF;
+		IF ST_Touches(ST_StartPoint(geoemtry1),geoemtry2) THEN
+			IF ST_Disjoint(ST_EndPoint(geoemtry1),geoemtry2) THEN
+				status :=  replace('status','status','Leave');
+			END IF;
+			IF ST_Within(ST_EndPoint(geoemtry1),geoemtry2) THEN
+				status :=  replace('status','status','Enter');
+			END IF;		
+		END IF; 
+		
+		sql := 'SELECT array_agg(geom) 
+ 				FROM ST_DumpPoints(ST_Intersection('||quote_literal((ST_ASTEXT(geoemtry1)))||' ,'||quote_literal(f_geometry_text)||' ))
+				WHERE NOT ST_WithIn(geom,'||quote_literal(f_geometry_text) ||')';
+				EXECUTE sql into NumOfGeom;
+				
+		IF array_length(NumOfGeom,1) is null THEN
+		RETURN status;
+		END IF;
+		
+		FOREACH tempgeom IN ARRAY NumOfGeom
+		LOOP	 
+		     i := i + 1;
+		     sql := ' SELECT path[1]
+			        FROM ST_DumpPoints('||quote_literal(ST_ASTEXT(geoemtry1)) ||')
+					ORDER BY st_distance('||quote_literal(ST_ASTEXT(tempgeom)) ||',geom) LIMIT 1;';
+			 EXECUTE sql into path;
+			 raise notice 'path:%',M_Starttime(M_At(f_mgeometry,path));
+			 IF path = 1 THEN
+			 	geom := ST_PointN(ST_ShortestLine(tempgeom,ST_MakeLine( ST_PointN(geoemtry1,path),ST_PointN(geoemtry1,path + 1 ))),2);
+				rate :=  ST_Distance(ST_PointN(geoemtry1,path),geom) / ST_Distance(ST_PointN(geoemtry1,path),ST_PointN(geoemtry1,path + 1));
+				IF M_Starttime(M_At(f_mgeometry,path))  > M_Starttime(M_At(f_mgeometry,path + 1)) THEN
+				tempresult := M_Starttime(M_At(f_mgeometry,path)) - ABS(M_Starttime(M_At(f_mgeometry,path)) - M_Starttime(M_At(f_mgeometry,path + 1)))* rate;
+				END IF;		
+				IF M_Starttime(M_At(f_mgeometry,path)) < M_Starttime(M_At(f_mgeometry,path + 1)) THEN
+				tempresult := M_Starttime(M_At(f_mgeometry,path)) + ABS(M_Starttime(M_At(f_mgeometry,path)) - M_Starttime(M_At(f_mgeometry,path + 1)))* rate;
+				END IF;
+				tempresult := floor(tempresult::double precision)::text;
+			 ELSEIF path = ST_NPoints(geoemtry1) THEN
+			 	geom := ST_PointN(ST_ShortestLine(tempgeom,ST_MakeLine(ST_PointN(geoemtry1,path),ST_PointN(geoemtry1,path - 1))),2);
+				rate :=  ST_Distance(ST_PointN(geoemtry1,path),geom) / ST_Distance(ST_PointN(geoemtry1,path),ST_PointN(geoemtry1,path - 1));
+				IF M_Starttime(M_At(f_mgeometry,path))  > M_Starttime(M_At(f_mgeometry,path - 1)) THEN
+					tempresult := M_Starttime(M_At(f_mgeometry,path)) - ABS(M_Starttime(M_At(f_mgeometry,path)) - M_Starttime(M_At(f_mgeometry,path - 1)))* rate;
+					END IF;		
+					IF M_Starttime(M_At(f_mgeometry,path)) < M_Starttime(M_At(f_mgeometry,path - 1)) THEN
+					tempresult := M_Starttime(M_At(f_mgeometry,path)) + ABS(M_Starttime(M_At(f_mgeometry,path)) - M_Starttime(M_At(f_mgeometry,path - 1)))* rate;
+					END IF;
+				tempresult := floor(tempresult::double precision)::text;
+
+			 ELSE
+			    distance1 := ST_Distance(ST_MakeLine(ST_PointN(geoemtry1,path),ST_PointN(geoemtry1,path - 1)),tempgeom);
+			    distance2 := ST_Distance(ST_MakeLine(ST_PointN(geoemtry1,path),ST_PointN(geoemtry1,path + 1)),tempgeom);
+				IF distance1 < distance2 THEN
+				    geom := ST_PointN(ST_ShortestLine(tempgeom,ST_MakeLine(ST_PointN(geoemtry1,path),ST_PointN(geoemtry1,path - 1))),2);
+					rate :=  ST_Distance(ST_PointN(geoemtry1,path),geom) / ST_Distance(ST_PointN(geoemtry1,path),ST_PointN(geoemtry1,path - 1));
+					IF M_Starttime(M_At(f_mgeometry,path))  > M_Starttime(M_At(f_mgeometry,path - 1)) THEN
+					tempresult := M_Starttime(M_At(f_mgeometry,path)) - ABS(M_Starttime(M_At(f_mgeometry,path)) - M_Starttime(M_At(f_mgeometry,path - 1)))* rate;
+					END IF;		
+					IF M_Starttime(M_At(f_mgeometry,path)) < M_Starttime(M_At(f_mgeometry,path - 1)) THEN
+					tempresult := M_Starttime(M_At(f_mgeometry,path)) + ABS(M_Starttime(M_At(f_mgeometry,path)) - M_Starttime(M_At(f_mgeometry,path - 1)))* rate;
+					END IF;
+				ELSE
+					geom := ST_PointN(ST_ShortestLine(tempgeom,ST_MakeLine(ST_PointN(geoemtry1,path),ST_PointN(geoemtry1,path + 1))),2);
+				    rate :=  ST_Distance(ST_PointN(geoemtry1,path),geom) / ST_Distance(ST_PointN(geoemtry1,path),ST_PointN(geoemtry1,path + 1));
+					IF M_Starttime(M_At(f_mgeometry,path))  > M_Starttime(M_At(f_mgeometry,path + 1)) THEN
+					tempresult := M_Starttime(M_At(f_mgeometry,path)) - ABS(M_Starttime(M_At(f_mgeometry,path)) - M_Starttime(M_At(f_mgeometry,path + 1)))* rate;
+					END IF;		
+					IF M_Starttime(M_At(f_mgeometry,path)) < M_Starttime(M_At(f_mgeometry,path + 1)) THEN
+					tempresult := M_Starttime(M_At(f_mgeometry,path)) + ABS(M_Starttime(M_At(f_mgeometry,path)) - M_Starttime(M_At(f_mgeometry,path + 1)))* rate;
+					END IF;
+				END IF;
+				tempresult := floor(tempresult::double precision)::text;
+
+			 END IF;
+			 IF	i = 1 THEN		 
+				tempresult := 	(status || '@' || tempresult || ' ')::text;
+				result := concat(result,tempresult);
+			 ELSE
+				 IF status = 'Enter' THEN
+				 status := 'Leave';
+				 tempresult := (	status||'@' || tempresult ||' ')::text;
+				 result := concat(result,tempresult);
+				 ELSEIF status = 'Leave' THEN
+				 status := 'Enter';
+				 tempresult := 	status ||'@'|| tempresult ||' ';
+				 result := concat(result,tempresult);
+				 END IF;
+				 
+			END IF;
+ 			END LOOP;
+			 
+		RETURN result;
+	END IF;	
+END
+$BODY$;
+ALTER FUNCTION public.m_event(character varying, text)
+    OWNER TO postgres;
+
+
+CREATE OR REPLACE FUNCTION public.m_enter(
+	character varying,
+	text)
+    RETURNS boolean
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE STRICT 
+AS $BODY$
+DECLARE
+	f_mgeometry			alias for $1;
+	f_geometry_text		alias for $2;
+	geoemtry1      geometry;
+	geoemtry2		geometry;
+	sql					text;
+	res						bool;
+	geom					geometry;
+	NumOfGeom				geometry[];
+	starttime				bigint;
+	tempgeom					geometry;
+	status					text='NULL';
+	i						int = 0;
+	mpid                integer;
+	tempresult					text;
+	result						text='';
+BEGIN
+
+
+   	geoemtry1 := m_spatial(f_mgeometry);
+	geoemtry2 := ST_GeomFromText(f_geometry_text);
+	starttime := M_Starttime(f_mgeometry);
+	res  := ST_Intersects(geoemtry1,geoemtry2);	
+	
+	IF res = FALSE THEN
+		RETURN FALSE;
+	ELSE
+		IF ST_NPoints(ST_Intersection(ST_ASTEXT(geoemtry1),f_geometry_text)) >=2 THEN
+			RETURN TRUE;
+		ELSE
+			IF ST_Disjoint(ST_StartPoint(geoemtry1),geoemtry2) THEN
+		 	RETURN TRUE;
+			END IF;
+			
+			IF ST_Within(ST_StartPoint(geoemtry1),geoemtry2) THEN
+		 	RETURN FALSE;
+			END IF;
+			
+			IF ST_Touches(ST_StartPoint(geoemtry1),geoemtry2) THEN
+					IF ST_Disjoint(ST_EndPoint(geoemtry1),geoemtry2) THEN
+					RETURN FALSE;
+					END IF;
+					IF ST_Within(ST_EndPoint(geoemtry1),geoemtry2) THEN
+					RETURN TRUE;
+					END IF;
+			END IF;
+		END IF;
+			
+	END IF; 
+		
+	
+END
+$BODY$;
+ALTER FUNCTION public.m_enter(character varying, text)
+    OWNER TO postgres;
+
+CREATE OR REPLACE FUNCTION public.m_leave(
+	character varying,
+	text)
+    RETURNS boolean
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE STRICT 
+AS $BODY$
+DECLARE
+	f_mgeometry			alias for $1;
+	f_geometry_text		alias for $2;
+	geoemtry1      geometry;
+	geoemtry2		geometry;
+	sql					text;
+	res						bool;
+	geom					geometry;
+	NumOfGeom				geometry[];
+	starttime				bigint;
+	tempgeom					geometry;
+	status					text='NULL';
+	i						int = 0;
+	mpid                integer;
+	tempresult					text;
+	result						text='';
+BEGIN
+
+
+   	geoemtry1 := m_spatial(f_mgeometry);
+	geoemtry2 := ST_GeomFromText(f_geometry_text);
+	starttime := M_Starttime(f_mgeometry);
+	res  := ST_Intersects(geoemtry1,geoemtry2);	
+	
+	IF res = FALSE THEN
+		RETURN FALSE;
+	ELSE
+		IF ST_NPoints(ST_Intersection(ST_ASTEXT(geoemtry1),f_geometry_text)) >=2 THEN
+			RETURN TRUE;
+		ELSE
+		
+			IF ST_Disjoint(ST_StartPoint(geoemtry1),geoemtry2) THEN
+		 	RETURN FALSE;
+			END IF;
+			
+			IF ST_Within(ST_StartPoint(geoemtry1),geoemtry2) THEN
+		 	RETURN TRUE;
+			END IF;
+			
+			IF ST_Touches(ST_StartPoint(geoemtry1),geoemtry2) THEN
+					IF ST_Disjoint(ST_EndPoint(geoemtry1),geoemtry2) THEN
+					RETURN TRUE;
+					END IF;
+					IF ST_Within(ST_EndPoint(geoemtry1),geoemtry2) THEN
+					RETURN FALSE;
+					END IF;
+			END IF;
+		END IF;
+			
+	END IF; 
+		
+	
+END
+$BODY$;
+ALTER FUNCTION public.m_leave(character varying, text)
+    OWNER TO postgres;
 	
