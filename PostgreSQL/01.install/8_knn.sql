@@ -6,7 +6,6 @@ CREATE TYPE kpq_element AS (
 CREATE  OR REPLACE TYPE kpq AS (
     heap kpq_element[],
     size integer
-
 );
 
 CREATE OR REPLACE FUNCTION kpq_init()
