@@ -223,7 +223,7 @@ BEGIN
    k := mpoint_array.k;
    FOREACH pt IN ARRAY mpoint_array.mpoint_inside_array
     LOOP
-    traj := m_spatial(pt);
+        traj := m_spatial(pt);
 	dis := ST_Distance(traj,geo);
 	IF (kpq_size(kpq_)) < k THEN
 	  kpq_ := kpq_offer(kpq,pt,dis);
