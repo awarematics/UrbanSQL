@@ -242,3 +242,104 @@ $BODY$;
 ALTER FUNCTION public.m_deferred_knn_final(mpoint_array)
     OWNER TO postgres;
 
+	
+CREATE AGGREGATE m_knn_materialized(mpoint,geometry,integer)
+(
+  SFUNC = m_materialized_knn_sfunc,
+  STYPE = kpq,	 
+  INITCOND = '("{""(,)""}",1)'
+);
+
+
+CREATE OR REPLACE FUNCTION public.m_materialized_knn_sfunc(
+	kpq,
+	mpoint,
+	geometry,
+	integer)
+    RETURNS  kpq
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE STRICT 
+AS $BODY$
+DECLARE
+	kpq_			alias for $1;
+	f_mpoint		alias for $2;
+	f_geo			alias for $3;
+	f_k				alias for $4;
+	numofmater      integer;
+	sql_cq          text;
+	f_range			integer;
+	dis			    double precision;
+	tempdis         double precision;
+	kpq_ele			kpq_element;
+	mpid_array		mpoint[];
+	mpid_element	mpoint;
+	f_mgeometry_segtable_name	char(200);
+	traj			    geometry;
+	session_key 			text;
+	session_value			text;
+	tmp_table			text;
+	sql_text            text;
+BEGIN
+	sql_cq := current_query();
+	f_range := 100;
+	f_mgeometry_segtable_name := temp_mgeometry_table(f_mpoint);
+	
+	session_key := 'temp.knn.column';
+	BEGIN
+		session_value := current_setting(session_key);
+	EXCEPTION when undefined_object then
+		perform set_config(session_key, '0', false);	     
+		session_value := current_setting(session_key);
+	END;
+	IF (session_value = '0') THEN	
+		perform set_config(session_key, '1', false);
+		tmp_table := 'temp_table';
+		sql_text := 'CREATE temporary TABLE ' ||tmp_table|| ' as ';
+		sql_text := sql_text || ' SELECT DISTINCT mpid FROM ' || f_mgeometry_segtable_name;
+		sql_text := sql_text || ' WHERE ST_DWithin($1,trajectory,$2)  ;';
+		EXECUTE sql_text USING f_geo,f_range;
+	END IF;	
+	
+	sql_text := 'SELECT COUNT(*) FROM temp_table WHERE mpid = ' || f_mgeometry.moid;
+    EXECUTE sql_text INTO numofmater;
+	WHILE numofmater < f_k LOOP
+	   sql_text := 'UPDATE '|| tmp_table||' as ';
+	   sql_text := sql_text || ' SELECT DISTINCT mpid FROM ' || f_mgeometry_segtable_name;
+	   sql_text := sql_text || ' WHERE ST_DWithin($1,trajectory,$2 * 1.5)  ;';
+	   EXECUTE sql_text INTO mpid_array USING f_geo,f_range;
+	   sql_text := 'SELECT COUNT(*) FROM temp_table WHERE mpid = ' || f_mgeometry.moid;
+    EXECUTE sql_text INTO numofmater;
+	END LOOP;
+	
+	FOREACH mpid_element IN ARRAY mpid_array
+	LOOP
+	    traj := m_spatial(pt);
+	    dis := ST_Distance(traj,geo);
+	    IF (kpq_size(kpq_)) < k THEN
+	       kpq_ := kpq_offer(kpq,pt,dis);
+	    ELSE 
+	       kpq_ele:= kpq_peek(kpq);
+	       tempdis:= kpq_ele.double_precision;
+	       IF dis < tempdis THEN
+	          kpq_ := kpq_pop(kpq_);
+		      kpq_ := kpq_offer(kpq_,pt,dis);
+	       END IF;
+	    END IF;  
+	END LOOP;
+	RETURN kpq_;
+END
+$BODY$;
+ALTER FUNCTION public.m_materialized_knn_sfunc(kpq,mpoint, geometry,integer)
+    OWNER TO postgres;
+
+SELECT * FROM mgeometry_columns
+
+SELECT kpq_init();
+	SELECT current_query();
+	
+	EXPLAIN ANALYZE  SELECT kpq_init();
+CREATE EXTENSION pg_stat_statements;
+
+SELECT *
+FROM  pg_stat_statements
