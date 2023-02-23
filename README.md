@@ -451,14 +451,36 @@ FROM trips
 ### K Nearest Neighbors Query
 ```
 Query 32 : For each trajectory from Trip, list the 3 trajectories that have been closest to given point.
-SELECT M_knn(t.traj,'POINT (1 5)',3)
+
+SELECT M_knn_naive(t.traj,'POINT (1 5)',3)
+FROM Trip t;
+
+SELECT M_knn_deferred(t.traj,'POINT (1 5)',3)
+FROM Trip t;
+
+SELECT M_knn_mater(t.traj,'POINT (1 5)',3)
 FROM Trip t;
 
 Query 33 : For each trajectory from Trip, list the 3 nearest points from POI that have been closest to each trajectory. 
-SELECT M_knn(t.traj,p.point,3)
+
+SELECT M_knn_naive(t.traj,p.point,3)
 FROM Trip t, POI p;
 
-Query 34 : For each trip from Trips, list the 3 trips that are closest to that this one
-SELECT M_knn(t1.traj,t2.traj,3)
+SELECT M_knn_deferred(t.traj,p.point,3)
+FROM Trip t, POI p;
+
+SELECT M_knn_materialized(t.traj,p.point,3)
+FROM Trip t, POI p;
+
+Query 34 : For each trip from Trips, list the 3 trips that are closest to that this one.
+
+SELECT M_knn_naive(t1.traj,t2.traj,3)
 FROM Trip t1, Trip t2;
+
+SELECT M_knn_deferred(t1.traj,t2.traj,3)
+FROM Trip t1, Trip t2;
+
+SELECT M_knn_materialized(t1.traj,t2.traj,3)
+FROM Trip t1, Trip t2;
+
 ```
