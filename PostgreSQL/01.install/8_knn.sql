@@ -3,7 +3,7 @@ CREATE TYPE kpq_element AS (
     double_precision double precision
 );
 
-CREATE  OR REPLACE TYPE kpq AS (
+CREATE OR REPLACE TYPE kpq AS (
     heap kpq_element[],
     size integer
 );
