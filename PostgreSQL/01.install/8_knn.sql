@@ -101,15 +101,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT kpq_init();
-
-SELECT kpq_peek(kpq_insert(kpq_insert(kpq_insert(kpq_init(), ROW((1,347620,null,null)::mpoint, 4.0)), ROW((2,347620,null,null)::mpoint, 6.0)), ROW((3,347620,null,null)::mpoint, 3.0)));
-
-SELECT kpq_insert(kpq_init(),  ((1,347620,null,null)::mpoint, 1.0)::kpq_element );
-
-SELECT kpq_pop(kpq_insert(kpq_insert(kpq_insert(kpq_init(), ROW((1,347620,null,null)::mpoint, 1.0)), ROW((2,347620,null,null)::mpoint, 2.0)), ROW((3,347620,null,null)::mpoint, 3.0)));
-
-
 
 
 CREATE AGGREGATE m_knn_naive(mpoint,geometry,integer)
@@ -336,10 +327,21 @@ ALTER FUNCTION public.m_materialized_knn_sfunc(kpq,mpoint, geometry,integer)
 SELECT * FROM mgeometry_columns
 
 SELECT kpq_init();
-	SELECT current_query();
+SELECT current_query();
 	
-	EXPLAIN ANALYZE  SELECT kpq_init();
+EXPLAIN ANALYZE  SELECT kpq_init();
 CREATE EXTENSION pg_stat_statements;
 
 SELECT *
 FROM  pg_stat_statements
+
+
+SELECT kpq_init();
+
+SELECT kpq_peek(kpq_insert(kpq_insert(kpq_insert(kpq_init(), ROW((1,347620,null,null)::mpoint, 4.0)), ROW((2,347620,null,null)::mpoint, 6.0)), ROW((3,347620,null,null)::mpoint, 3.0)));
+
+SELECT kpq_insert(kpq_init(),  ((1,347620,null,null)::mpoint, 1.0)::kpq_element );
+
+SELECT kpq_pop(kpq_insert(kpq_insert(kpq_insert(kpq_init(), ROW((1,347620,null,null)::mpoint, 1.0)), ROW((2,347620,null,null)::mpoint, 2.0)), ROW((3,347620,null,null)::mpoint, 3.0)));
+
+
