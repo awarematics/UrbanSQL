@@ -458,7 +458,7 @@ FROM Trip t;
 SELECT M_knn_deferred(t.traj,'POINT (1 5)',3)
 FROM Trip t;
 
-SELECT M_knn_mater(t.traj,'POINT (1 5)',3)
+SELECT M_knn_materialized(t.traj,'POINT (1 5)',3)
 FROM Trip t;
 
 Query 33 : For each trajectory from Trip, list the 3 nearest points from POI that have been closest to each trajectory. 
